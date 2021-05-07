@@ -1,0 +1,11 @@
+.item:focus .correct {
+    --border-color: limegreen;
+}
+
+.correct:focus {
+    background: blue;
+}
+
+.incorrect {
+    --border-color: tomato;
+}
