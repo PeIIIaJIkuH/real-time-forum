@@ -5,7 +5,7 @@ export const Chats: FC = () => {
 	return (
 		<IonPage>
 			<IonHeader>
-				<IonToolbar>
+				<IonToolbar className='ion-text-center'>
 					<IonTitle>Chats</IonTitle>
 				</IonToolbar>
 			</IonHeader>
