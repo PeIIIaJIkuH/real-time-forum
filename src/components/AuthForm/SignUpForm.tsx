@@ -1,7 +1,7 @@
 import {IonButton, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonToast} from '@ionic/react'
 import clsx from 'clsx'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
-import {FC, useRef, useState} from 'react'
+import {FC, RefObject, useState} from 'react'
 import {authAPI} from '../../api/auth'
 import {RegisterValues} from '../../types'
 import {registerValidationSchema} from '../../utils/validationSchemas'
@@ -11,9 +11,10 @@ import s from './AuthForm.module.css'
 
 interface Props {
 	slidePrev: () => void
+	innerRef: RefObject<HTMLFormElement>
 }
 
-export const SignUpForm: FC<Props> = ({slidePrev}) => {
+export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 	const initialValues: RegisterValues = {
 		username: null,
 		email: null,
@@ -26,14 +27,7 @@ export const SignUpForm: FC<Props> = ({slidePrev}) => {
 	}
 
 	const [error, setError] = useState(''),
-		[success, setSuccess] = useState(''),
-		formRef = useRef<HTMLFormElement>(null)
-
-	const resetForm = () => {
-		setTimeout(() => {
-			formRef.current?.reset()
-		}, 400)
-	}
+		[success, setSuccess] = useState('')
 
 	const onSubmit = async (values: FormikValues) => {
 		const response = await authAPI.signUp(values as RegisterValues)
@@ -41,7 +35,6 @@ export const SignUpForm: FC<Props> = ({slidePrev}) => {
 			setSuccess(response.message)
 			setTimeout(() => setSuccess(''), 1000)
 			slidePrev()
-			resetForm()
 		} else {
 			setError(response.message)
 			setTimeout(() => setError(''), 1000)
@@ -50,7 +43,6 @@ export const SignUpForm: FC<Props> = ({slidePrev}) => {
 
 	const onClick = () => {
 		slidePrev()
-		resetForm()
 	}
 
 	return <>
@@ -58,7 +50,7 @@ export const SignUpForm: FC<Props> = ({slidePrev}) => {
 		<IonToast isOpen={!!error} message={error} duration={1000} color='danger'/>
 		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registerValidationSchema}>
 			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<RegisterValues>) => (
-				<Form ref={formRef} onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
+				<Form ref={innerRef} onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
 					<IonList>
 						<InputItem touched={touched.username} error={errors.username} value={values.username} type='text' name='username'
 								   label='Username' handleChange={handleChange}/>
@@ -76,7 +68,7 @@ export const SignUpForm: FC<Props> = ({slidePrev}) => {
 								   label='Age' handleChange={handleChange}/>
 						<IonItem className={clsx(touched.gender && errors.gender ? s.incorrect : s.correct)}>
 							<IonLabel position='floating'>Gender</IonLabel>
-							<IonSelect name='gender' value={values.gender} interface='action-sheet' onIonChange={handleChange}>
+							<IonSelect name='gender' value={values.gender} interface='popover' onIonChange={handleChange}>
 								<IonSelectOption value='male'>Male</IonSelectOption>
 								<IonSelectOption value='female'>Female</IonSelectOption>
 								<IonSelectOption value='other'>Other</IonSelectOption>

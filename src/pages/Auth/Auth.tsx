@@ -1,6 +1,6 @@
 import {IonSlide, IonSlides} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
-import {FC, useEffect, useRef} from 'react'
+import {FC, RefObject, useEffect, useRef} from 'react'
 import {Redirect} from 'react-router'
 import {SignInForm} from '../../components/AuthForm/SignInForm'
 import {SignUpForm} from '../../components/AuthForm/SignUpForm'
@@ -9,7 +9,9 @@ import authState from '../../store/authState'
 import s from './Auth.module.css'
 
 export const Auth: FC = observer(() => {
-	const slidesRef = useRef<HTMLIonSlidesElement>(null)
+	const slidesRef = useRef<HTMLIonSlidesElement>(null),
+		loginFormRef = useRef<HTMLFormElement>(null),
+		registerFormRef = useRef<HTMLFormElement>(null)
 
 	useEffect(() => {
 		if (!slidesRef.current) return
@@ -19,30 +21,37 @@ export const Auth: FC = observer(() => {
 	if (authState.isAuth)
 		return <Redirect to='/profile'/>
 
-	const slideNext = async () => {
+	const slide = async (toNext: boolean, ref: RefObject<HTMLFormElement>) => {
 		if (!slidesRef.current) return
 		await slidesRef.current.lockSwipes(false)
-		await slidesRef.current.slideNext()
+		if (toNext)
+			await slidesRef.current.slideNext()
+		else
+			await slidesRef.current.slidePrev()
+		setTimeout(() => {
+			ref.current!.reset()
+		}, 400)
 		await slidesRef.current.lockSwipes(true)
 	}
 
+	const slideNext = async () => {
+		await slide(true, loginFormRef)
+	}
+
 	const slidePrev = async () => {
-		if (!slidesRef.current) return
-		await slidesRef.current.lockSwipes(false)
-		await slidesRef.current.slidePrev()
-		await slidesRef.current.lockSwipes(true)
+		await slide(false, registerFormRef)
 	}
 
 	return (
 		<IonSlides className={s.slides} ref={slidesRef} pager>
 			<IonSlide>
 				<SlideItem title='Sign In'>
-					<SignInForm slideNext={slideNext}/>
+					<SignInForm slideNext={slideNext} innerRef={loginFormRef}/>
 				</SlideItem>
 			</IonSlide>
 			<IonSlide>
 				<SlideItem title='Sign Up'>
-					<SignUpForm slidePrev={slidePrev}/>
+					<SignUpForm slidePrev={slidePrev} innerRef={registerFormRef}/>
 				</SlideItem>
 			</IonSlide>
 		</IonSlides>
