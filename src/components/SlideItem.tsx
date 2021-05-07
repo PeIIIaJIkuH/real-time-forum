@@ -1,18 +1,9 @@
-import {IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar} from '@ionic/react'
+import {IonCol, IonContent, IonGrid, IonPage, IonRow} from '@ionic/react'
 import {FC} from 'react'
 
-interface Props {
-	title: string
-}
-
-export const SlideItem: FC<Props> = ({title, children}) => {
+export const SlideItem: FC = ({children}) => {
 	return (
 		<IonPage>
-			<IonHeader>
-				<IonToolbar className='ion-text-center'>
-					<IonTitle>{title}</IonTitle>
-				</IonToolbar>
-			</IonHeader>
 			<IonContent>
 				<IonGrid fixed className='ion-no-padding'>
 					<IonRow>
