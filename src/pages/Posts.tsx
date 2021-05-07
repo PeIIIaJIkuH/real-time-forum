@@ -1,19 +1,6 @@
-import {
-	IonCard,
-	IonCardContent,
-	IonCardHeader,
-	IonCardSubtitle,
-	IonCardTitle,
-	IonCol,
-	IonContent,
-	IonGrid,
-	IonHeader,
-	IonPage,
-	IonRow,
-	IonTitle,
-	IonToolbar
-} from '@ionic/react'
-import {FC} from 'react'
+import {IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonRow} from '@ionic/react'
+import {FC, useEffect} from 'react'
+import appState from '../store/appState'
 import {IPost} from '../types'
 
 const posts: IPost[] = [{
@@ -29,30 +16,25 @@ const posts: IPost[] = [{
 }]
 
 export const Posts: FC = () => {
+	useEffect(() => {
+		appState.setTitle('Posts')
+	}, [])
+
 	return (
-		<IonPage>
-			<IonHeader>
-				<IonToolbar className='ion-text-center'>
-					<IonTitle>Posts</IonTitle>
-				</IonToolbar>
-			</IonHeader>
-			<IonContent>
-				<IonGrid fixed>
-					{posts.map(post => (
-						<IonRow key={post.id}>
-							<IonCol>
-								<IonCard>
-									<IonCardHeader>
-										<IonCardTitle>{post.title}</IonCardTitle>
-										<IonCardSubtitle>{post.authorId}</IonCardSubtitle>
-									</IonCardHeader>
-									<IonCardContent>{post.content}</IonCardContent>
-								</IonCard>
-							</IonCol>
-						</IonRow>
-					))}
-				</IonGrid>
-			</IonContent>
-		</IonPage>
+		<IonGrid fixed>
+			{posts.map(post => (
+				<IonRow key={post.id}>
+					<IonCol>
+						<IonCard>
+							<IonCardHeader>
+								<IonCardTitle>{post.title}</IonCardTitle>
+								<IonCardSubtitle>{post.authorId}</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>{post.content}</IonCardContent>
+						</IonCard>
+					</IonCol>
+				</IonRow>
+			))}
+		</IonGrid>
 	)
 }

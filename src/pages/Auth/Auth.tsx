@@ -1,22 +1,31 @@
 import {IonSlide, IonSlides} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
-import {FC, RefObject, useEffect, useRef} from 'react'
+import {FC, RefObject, useEffect, useRef, useState} from 'react'
 import {Redirect} from 'react-router'
 import {SignInForm} from '../../components/AuthForm/SignInForm'
 import {SignUpForm} from '../../components/AuthForm/SignUpForm'
 import {SlideItem} from '../../components/SlideItem'
+import appState from '../../store/appState'
 import authState from '../../store/authState'
 import s from './Auth.module.css'
 
 export const Auth: FC = observer(() => {
 	const slidesRef = useRef<HTMLIonSlidesElement>(null),
 		loginFormRef = useRef<HTMLFormElement>(null),
-		registerFormRef = useRef<HTMLFormElement>(null)
+		registerFormRef = useRef<HTMLFormElement>(null),
+		[slideIndex, setSlideIndex] = useState(0)
 
 	useEffect(() => {
 		if (!slidesRef.current) return
 		slidesRef.current.lockSwipes(true).then()
 	}, [])
+
+	useEffect(() => {
+		if (slideIndex === 0)
+			appState.setTitle('Sign In')
+		else
+			appState.setTitle('Sign Up')
+	}, [slideIndex])
 
 	if (authState.isAuth)
 		return <Redirect to='/profile'/>
@@ -28,6 +37,7 @@ export const Auth: FC = observer(() => {
 			await slidesRef.current.slideNext()
 		else
 			await slidesRef.current.slidePrev()
+		setSlideIndex(toNext ? 1 : 0)
 		setTimeout(() => {
 			ref.current!.reset()
 		}, 400)
@@ -45,12 +55,12 @@ export const Auth: FC = observer(() => {
 	return (
 		<IonSlides className={s.slides} ref={slidesRef} pager>
 			<IonSlide>
-				<SlideItem title='Sign In'>
+				<SlideItem>
 					<SignInForm slideNext={slideNext} innerRef={loginFormRef}/>
 				</SlideItem>
 			</IonSlide>
 			<IonSlide>
-				<SlideItem title='Sign Up'>
+				<SlideItem>
 					<SignUpForm slidePrev={slidePrev} innerRef={registerFormRef}/>
 				</SlideItem>
 			</IonSlide>

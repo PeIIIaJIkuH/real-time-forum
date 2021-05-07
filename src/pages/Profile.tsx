@@ -1,10 +1,15 @@
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react'
+import {IonContent, IonPage} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {Redirect} from 'react-router'
+import appState from '../store/appState'
 import authState from '../store/authState'
 
 export const Profile: FC = observer(() => {
+	useEffect(() => {
+		appState.setTitle('Profile')
+	}, [])
+
 	const {isAuth} = authState
 
 	if (!isAuth) {
@@ -13,11 +18,6 @@ export const Profile: FC = observer(() => {
 
 	return (
 		<IonPage>
-			<IonHeader>
-				<IonToolbar className='ion-text-center'>
-					<IonTitle>Profile</IonTitle>
-				</IonToolbar>
-			</IonHeader>
 			<IonContent>
 				<div>Profile</div>
 			</IonContent>
