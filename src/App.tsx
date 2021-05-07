@@ -18,6 +18,7 @@ import '@ionic/react/css/typography.css'
 import {chatbubbleEllipsesOutline, personOutline, readerOutline} from 'ionicons/icons'
 import {FC} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
+import {Auth} from './pages/Auth/Auth'
 import {Chats} from './pages/Chats'
 import {Posts} from './pages/Posts'
 import {Profile} from './pages/Profile'
@@ -34,6 +35,7 @@ export const App: FC = () => (
 						<Route exact path='/posts'><Posts/></Route>
 						<Route exact path='/chats'><Chats/></Route>
 						<Route exact path='/profile'><Profile/></Route>
+						<Route exact path='/auth'><Auth/></Route>
 						<Redirect exact path='/' to='/posts'/>
 					</Switch>
 				</IonRouterOutlet>
