@@ -10,9 +10,9 @@ const posts: IPost[] = [{
 	content: 'Content 1',
 	categories: [{id: '1', text: 'text'}, {id: '2', text: 'about'}],
 	comments: [],
-	creationDate: new Date()
+	createdAt: Date.now()
 }, {
-	id: '2', authorId: '1', title: 'Post 2', content: 'Content 2', categories: [], comments: [], creationDate: new Date()
+	id: '2', authorId: '1', title: 'Post 2', content: 'Content 2', categories: [], comments: [], createdAt: Date.now()
 }]
 
 export const Posts: FC = () => {
