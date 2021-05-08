@@ -10,9 +10,7 @@ export const Profile: FC = observer(() => {
 		appState.setTitle('Profile')
 	}, [])
 
-	const {isAuth} = authState
-
-	if (!isAuth) {
+	if (!authState.user) {
 		return <Redirect to='/auth'/>
 	}
 
