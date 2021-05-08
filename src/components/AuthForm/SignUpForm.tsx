@@ -15,6 +15,9 @@ interface Props {
 }
 
 export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
+	const [error, setError] = useState(''),
+		[success, setSuccess] = useState('')
+	
 	const initialValues: RegisterValues = {
 		username: null,
 		email: null,
@@ -25,9 +28,6 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 		age: null,
 		gender: null
 	}
-
-	const [error, setError] = useState(''),
-		[success, setSuccess] = useState('')
 
 	const onSubmit = async (values: FormikValues) => {
 		const response = await authAPI.signUp(values as RegisterValues)
