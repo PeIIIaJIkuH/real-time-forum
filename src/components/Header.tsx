@@ -5,9 +5,9 @@ import appState from '../store/appState'
 
 export const Header: FC = observer(() => {
 	return (
-		<IonHeader>
+		<IonHeader translucent>
 			<IonToolbar>
-				<IonButtons slot='start'>
+				<IonButtons slot='end'>
 					<IonMenuButton/>
 				</IonButtons>
 				<IonTitle>{appState.title}</IonTitle>
