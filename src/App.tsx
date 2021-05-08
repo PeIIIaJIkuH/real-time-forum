@@ -56,16 +56,19 @@ export const App: FC = observer(() => {
 								<IonIcon icon={readerOutline}/>
 								<IonLabel>Posts</IonLabel>
 							</IonTabButton>
-							<IonTabButton tab='chats' href='/chats'>
-								<IonIcon icon={chatbubbleEllipsesOutline}/>
-								<IonLabel>Chats</IonLabel>
-							</IonTabButton>
-							{authState.user ? (
+							{authState.user && (
+								<IonTabButton tab='chats' href='/chats'>
+									<IonIcon icon={chatbubbleEllipsesOutline}/>
+									<IonLabel>Chats</IonLabel>
+								</IonTabButton>
+							)}
+							{authState.user && (
 								<IonTabButton tab='profile' href='/profile'>
 									<IonIcon icon={personOutline}/>
 									<IonLabel>Profile</IonLabel>
 								</IonTabButton>
-							) : (
+							)}
+							{!authState.user && (
 								<IonTabButton tab='auth' href='/auth'>
 									<IonIcon icon={logInOutline}/>
 									<IonLabel>Auth</IonLabel>
