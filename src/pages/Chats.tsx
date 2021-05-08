@@ -1,11 +1,16 @@
 import {IonGrid, IonItem, IonList} from '@ionic/react'
 import {FC, useEffect} from 'react'
+import {Redirect} from 'react-router'
 import appState from '../store/appState'
+import authState from '../store/authState'
 
 export const Chats: FC = () => {
 	useEffect(() => {
 		appState.setTitle('Chats')
 	}, [])
+	
+	if (!authState.user)
+		return <Redirect to='/auth'/>
 
 	return (
 		<IonGrid fixed className='ion-no-padding'>
