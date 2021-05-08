@@ -17,7 +17,7 @@ import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/typography.css'
 import {chatbubbleEllipsesOutline, logInOutline, personOutline, readerOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
 import {Header} from './components/Header'
 import {Menu} from './components/Menu'
@@ -30,8 +30,12 @@ import authState from './store/authState'
 /* Theme variables */
 import './theme/variables.css'
 
-export const App: FC = observer(() => (
-	<>
+export const App: FC = observer(() => {
+	useEffect(() => {
+		authState.fetchUserData().then()
+	}, [])
+
+	return <>
 		<Menu/>
 		<IonApp>
 			<Header/>
@@ -56,7 +60,7 @@ export const App: FC = observer(() => (
 								<IonIcon icon={chatbubbleEllipsesOutline}/>
 								<IonLabel>Chats</IonLabel>
 							</IonTabButton>
-							{authState.isAuth ? (
+							{authState.user ? (
 								<IonTabButton tab='profile' href='/profile'>
 									<IonIcon icon={personOutline}/>
 									<IonLabel>Profile</IonLabel>
@@ -73,4 +77,4 @@ export const App: FC = observer(() => (
 			</IonContent>
 		</IonApp>
 	</>
-))
+})
