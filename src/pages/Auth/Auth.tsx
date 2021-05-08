@@ -27,7 +27,7 @@ export const Auth: FC = observer(() => {
 			appState.setTitle('Sign Up')
 	}, [slideIndex])
 
-	if (authState.isAuth)
+	if (authState.user)
 		return <Redirect to='/profile'/>
 
 	const slide = async (toNext: boolean, ref: RefObject<HTMLFormElement>) => {
