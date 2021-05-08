@@ -1,12 +1,12 @@
 export interface IUser {
-	id: string
 	username: string
 	email: string
 	firstName: string
 	lastName: string
 	age: number
 	gender: IGender
-	creationDate: Date
+	createdAt: number
+	lastActive: number
 }
 
 export interface ICategory {
@@ -19,7 +19,7 @@ export interface IPost {
 	authorId: string
 	title: string
 	content: string
-	creationDate: Date
+	createdAt: number
 	categories: ICategory[]
 	comments: IComment[]
 }
@@ -29,7 +29,7 @@ export interface IComment {
 	authorId: string
 	postId: string
 	text: string
-	creationDate: Date
+	createdAt: number
 }
 
 export interface IMessage {
