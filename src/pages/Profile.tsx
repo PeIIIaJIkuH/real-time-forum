@@ -10,9 +10,8 @@ export const Profile: FC = observer(() => {
 		appState.setTitle('Profile')
 	}, [])
 
-	if (!authState.user) {
+	if (!authState.user)
 		return <Redirect to='/auth'/>
-	}
 
 	return (
 		<IonPage>

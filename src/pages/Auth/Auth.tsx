@@ -10,15 +10,15 @@ import authState from '../../store/authState'
 import s from './Auth.module.css'
 
 export const Auth: FC = observer(() => {
-	const slidesRef = useRef<HTMLIonSlidesElement>(null),
-		loginFormRef = useRef<HTMLFormElement>(null),
-		registerFormRef = useRef<HTMLFormElement>(null),
-		[slideIndex, setSlideIndex] = useState(0)
-
 	useEffect(() => {
 		if (!slidesRef.current) return
 		slidesRef.current.lockSwipes(true).then()
 	}, [])
+
+	const slidesRef = useRef<HTMLIonSlidesElement>(null),
+		loginFormRef = useRef<HTMLFormElement>(null),
+		registerFormRef = useRef<HTMLFormElement>(null),
+		[slideIndex, setSlideIndex] = useState(0)
 
 	useEffect(() => {
 		if (slideIndex === 0)
