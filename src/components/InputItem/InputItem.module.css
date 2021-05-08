@@ -1,11 +1,7 @@
-.item:focus .correct {
-    --border-color: limegreen;
-}
-
-.correct:focus {
-    background: blue;
+.correct {
+    --highlight-background: var(--ion-color-success);
 }
 
 .incorrect {
-    --border-color: tomato;
+    --highlight-background: var(--ion-color-danger);
 }
