@@ -1,8 +1,9 @@
-import {IonButton, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonToast} from '@ionic/react'
+import {IonButton, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, useIonToast} from '@ionic/react'
 import clsx from 'clsx'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
-import {FC, RefObject, useState} from 'react'
+import {FC, RefObject} from 'react'
 import {authAPI} from '../../api/auth'
+import appState from '../../store/appState'
 import {RegisterValues} from '../../types'
 import {toastDuration} from '../../utils/constants'
 import {registerValidationSchema} from '../../utils/validationSchemas'
@@ -16,8 +17,8 @@ interface Props {
 }
 
 export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
-	const [error, setError] = useState(''),
-		[success, setSuccess] = useState('')
+	const toastSuccess = useIonToast()[0],
+		toastError = useIonToast()[0]
 
 	const initialValues: RegisterValues = {
 		username: null,
@@ -31,24 +32,22 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 	}
 
 	const onSubmit = async (values: FormikValues) => {
+		appState.setIsLoading(true)
 		const response = await authAPI.signUp(values as RegisterValues)
 		if (response.state) {
-			setSuccess(response.message)
-			setTimeout(() => setSuccess(''), toastDuration)
+			toastSuccess({message: response.message, duration: toastDuration, color: 'success'})
 			slidePrev()
 		} else {
-			setError(response.message)
-			setTimeout(() => setError(''), toastDuration)
+			toastError({message: response.message, duration: toastDuration, color: 'danger'})
 		}
+		appState.setIsLoading(false)
 	}
 
 	const onClick = () => {
 		slidePrev()
 	}
 
-	return <>
-		<IonToast isOpen={!!success} message={success} duration={toastDuration} color='success'/>
-		<IonToast isOpen={!!error} message={error} duration={toastDuration} color='danger'/>
+	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registerValidationSchema}>
 			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<RegisterValues>) => (
 				<Form ref={innerRef} onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
@@ -84,5 +83,5 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 				</Form>
 			)}
 		</Formik>
-	</>
+	)
 }

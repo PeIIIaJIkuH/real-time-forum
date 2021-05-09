@@ -1,7 +1,8 @@
-import {IonButton, IonList, IonToast} from '@ionic/react'
+import {IonButton, IonList, useIonToast} from '@ionic/react'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
-import {FC, RefObject, useState} from 'react'
+import {FC, RefObject} from 'react'
 import {authAPI} from '../../api/auth'
+import appState from '../../store/appState'
 import authState from '../../store/authState'
 import {LoginValues} from '../../types'
 import {toastDuration} from '../../utils/constants'
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
-	const [error, setError] = useState('')
+	const toastError = useIonToast()[0]
 
 	const initialValues: LoginValues = {
 		usernameOrEmail: null,
@@ -22,32 +23,30 @@ export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
 	}
 
 	const onSubmit = async (values: FormikValues) => {
+		appState.setIsLoading(true)
 		const response = await authAPI.signIn(values as LoginValues)
 		if (response.state) {
 			await authState.fetchUserData()
 		} else {
-			setError(response.message)
-			setTimeout(() => setError(''), toastDuration)
+			toastError({message: response.message, duration: toastDuration, color: 'danger'})
 		}
+		appState.setIsLoading(false)
 	}
 
 	return (
-		<>
-			<IonToast isOpen={!!error} message={error} duration={toastDuration} color='danger'/>
-			<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginValidationSchema}>
-				{({values, handleSubmit, handleChange, errors, touched}: FormikProps<LoginValues>) => (
-					<Form ref={innerRef} onSubmit={handleSubmit}>
-						<IonList>
-							<InputItem touched={touched.usernameOrEmail} error={errors.usernameOrEmail} value={values.usernameOrEmail} type='text'
-									   name='usernameOrEmail' label='Username or Email' handleChange={handleChange} handleSubmit={handleSubmit}/>
-							<InputItem touched={touched.password} error={errors.password} value={values.password} type='password'
-									   name='password' label='Password' handleChange={handleChange} handleSubmit={handleSubmit}/>
-							<IonButton type='submit' expand='full' className='ion-margin'>Log In</IonButton>
-							<IonButton expand='full' className='ion-margin' fill='clear' onClick={slideNext}>Register</IonButton>
-						</IonList>
-					</Form>
-				)}
-			</Formik>
-		</>
+		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginValidationSchema}>
+			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<LoginValues>) => (
+				<Form ref={innerRef} onSubmit={handleSubmit}>
+					<IonList>
+						<InputItem touched={touched.usernameOrEmail} error={errors.usernameOrEmail} value={values.usernameOrEmail} type='text'
+								   name='usernameOrEmail' label='Username or Email' handleChange={handleChange} handleSubmit={handleSubmit}/>
+						<InputItem touched={touched.password} error={errors.password} value={values.password} type='password'
+								   name='password' label='Password' handleChange={handleChange} handleSubmit={handleSubmit}/>
+						<IonButton type='submit' expand='full' className='ion-margin'>Log In</IonButton>
+						<IonButton expand='full' className='ion-margin' fill='clear' onClick={slideNext}>Register</IonButton>
+					</IonList>
+				</Form>
+			)}
+		</Formik>
 	)
 }
