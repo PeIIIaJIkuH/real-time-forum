@@ -1,1 +1,1 @@
-export const toastDuration = 2000
+export const toastDuration = 1000
