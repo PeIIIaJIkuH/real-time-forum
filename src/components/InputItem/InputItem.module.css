@@ -1,7 +1,3 @@
-.correct {
-    --highlight-background: var(--ion-color-success);
-}
-
 .incorrect {
     --highlight-background: var(--ion-color-danger);
     --border-color: var(--ion-color-danger);
