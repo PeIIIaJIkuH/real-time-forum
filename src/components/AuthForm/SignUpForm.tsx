@@ -4,6 +4,7 @@ import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {FC, RefObject, useState} from 'react'
 import {authAPI} from '../../api/auth'
 import {RegisterValues} from '../../types'
+import {toastDuration} from '../../utils/constants'
 import {registerValidationSchema} from '../../utils/validationSchemas'
 import {ErrorItem} from '../ErrorItem/ErrorItem'
 import {InputItem} from '../InputItem/InputItem'
@@ -33,11 +34,11 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 		const response = await authAPI.signUp(values as RegisterValues)
 		if (response.state) {
 			setSuccess(response.message)
-			setTimeout(() => setSuccess(''), 1000)
+			setTimeout(() => setSuccess(''), toastDuration)
 			slidePrev()
 		} else {
 			setError(response.message)
-			setTimeout(() => setError(''), 1000)
+			setTimeout(() => setError(''), toastDuration)
 		}
 	}
 
@@ -46,8 +47,8 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 	}
 
 	return <>
-		<IonToast isOpen={!!success} message={success} duration={1000} color='success'/>
-		<IonToast isOpen={!!error} message={error} duration={1000} color='danger'/>
+		<IonToast isOpen={!!success} message={success} duration={toastDuration} color='success'/>
+		<IonToast isOpen={!!error} message={error} duration={toastDuration} color='danger'/>
 		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registerValidationSchema}>
 			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<RegisterValues>) => (
 				<Form ref={innerRef} onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>

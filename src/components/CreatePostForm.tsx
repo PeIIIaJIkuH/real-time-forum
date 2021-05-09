@@ -3,6 +3,7 @@ import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {arrowBackOutline} from 'ionicons/icons'
 import {FC, useState} from 'react'
 import {PostValues} from '../types'
+import {toastDuration} from '../utils/constants'
 import {postValidationSchema} from '../utils/validationSchemas'
 import {InputItem} from './InputItem/InputItem'
 import {TextareaItem} from './TextareaItem/TextareaItem'
@@ -36,7 +37,7 @@ export const CreatePostForm: FC<Props> = ({closeModal}) => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent>
-				<IonToast isOpen={!!error} message={error} duration={1000} color='danger'/>
+				<IonToast isOpen={!!error} message={error} duration={toastDuration} color='danger'/>
 				<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={postValidationSchema}>
 					{({values, handleSubmit, handleChange, errors, touched}: FormikProps<PostValues>) => (
 						<Form onSubmit={handleSubmit}>

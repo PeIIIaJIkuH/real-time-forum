@@ -1,10 +1,15 @@
-import {IonButton, IonContent, IonFooter, IonHeader, IonMenu, IonTitle, IonToolbar} from '@ionic/react'
+import {IonButton, IonContent, IonFooter, IonHeader, IonItem, IonLabel, IonMenu, IonTitle, IonToolbar} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import {FC, useRef} from 'react'
 import authState from '../store/authState'
 
 export const Menu: FC = observer(() => {
 	const menuRef = useRef<HTMLIonMenuElement>(null)
+
+	const onClick = async () => {
+		await authState.signOut()
+		await menuRef.current!.close()
+	}
 
 	return (
 		<IonMenu contentId='main' ref={menuRef}>
@@ -14,13 +19,14 @@ export const Menu: FC = observer(() => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent>
-				{authState.user && (
-					<IonButton onClick={async () => {
-						await authState.signOut()
-						await menuRef.current!.close()
-					}
-					}>Log out</IonButton>
-				)}
+				{authState.user && <>
+					<IonItem>
+						<IonLabel>{authState.user.username}</IonLabel>
+					</IonItem>
+					<IonItem>
+						<IonButton expand='block' fill='clear' color='danger' onClick={onClick}>Log out</IonButton>
+					</IonItem>
+				</>}
 			</IonContent>
 			<IonFooter>
 				<IonToolbar>

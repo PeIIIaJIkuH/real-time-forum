@@ -4,6 +4,7 @@ import {FC, RefObject, useState} from 'react'
 import {authAPI} from '../../api/auth'
 import authState from '../../store/authState'
 import {LoginValues} from '../../types'
+import {toastDuration} from '../../utils/constants'
 import {loginValidationSchema} from '../../utils/validationSchemas'
 import {InputItem} from '../InputItem/InputItem'
 
@@ -26,13 +27,13 @@ export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
 			await authState.fetchUserData()
 		} else {
 			setError(response.message)
-			setTimeout(() => setError(''), 1000)
+			setTimeout(() => setError(''), toastDuration)
 		}
 	}
 
 	return (
 		<>
-			<IonToast isOpen={!!error} message={error} duration={1000} color='danger'/>
+			<IonToast isOpen={!!error} message={error} duration={toastDuration} color='danger'/>
 			<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginValidationSchema}>
 				{({values, handleSubmit, handleChange, errors, touched}: FormikProps<LoginValues>) => (
 					<Form ref={innerRef} onSubmit={handleSubmit}>
