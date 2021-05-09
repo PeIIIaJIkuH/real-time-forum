@@ -1,9 +1,10 @@
-import {IonContent, IonPage, IonSlide, IonSlides} from '@ionic/react'
+import {IonPage, IonSlide, IonSlides} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import {FC, RefObject, useEffect, useRef, useState} from 'react'
 import {Redirect} from 'react-router'
 import {SignInForm} from '../../components/AuthForm/SignInForm'
 import {SignUpForm} from '../../components/AuthForm/SignUpForm'
+import {Content} from '../../components/Content/Content'
 import {Header} from '../../components/Header'
 import {SlideItem} from '../../components/SlideItem'
 import authState from '../../store/authState'
@@ -50,7 +51,7 @@ export const Auth: FC = observer(() => {
 	return (
 		<IonPage>
 			<Header title={title}/>
-			<IonContent>
+			<Content>
 				<IonSlides className={s.slides} ref={slidesRef} pager>
 					<IonSlide>
 						<SlideItem>
@@ -63,7 +64,7 @@ export const Auth: FC = observer(() => {
 						</SlideItem>
 					</IonSlide>
 				</IonSlides>
-			</IonContent>
+			</Content>
 		</IonPage>
 	)
 })

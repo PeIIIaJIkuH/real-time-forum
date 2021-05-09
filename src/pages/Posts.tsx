@@ -4,7 +4,7 @@ import {
 	IonCardHeader,
 	IonCardSubtitle,
 	IonCardTitle,
-	IonCol, IonContent,
+	IonCol,
 	IonFab,
 	IonFabButton,
 	IonGrid,
@@ -15,6 +15,7 @@ import {
 } from '@ionic/react'
 import {addOutline} from 'ionicons/icons'
 import {FC, useState} from 'react'
+import {Content} from '../components/Content/Content'
 import {CreatePostForm} from '../components/CreatePostForm'
 import {Header} from '../components/Header'
 import {IPost} from '../types'
@@ -53,7 +54,7 @@ export const Posts: FC = () => {
 	return (
 		<IonPage>
 			<Header title='Posts'/>
-			<IonContent>
+			<Content>
 				<IonFab vertical='bottom' horizontal='end' slot='fixed'>
 					<IonFabButton onClick={openModal}>
 						<IonIcon icon={addOutline} size='large'/>
@@ -77,7 +78,7 @@ export const Posts: FC = () => {
 						</IonRow>
 					))}
 				</IonGrid>
-			</IonContent>
+			</Content>
 		</IonPage>
 	)
 }

@@ -1,6 +1,7 @@
-import {IonContent, IonGrid, IonItem, IonList, IonPage} from '@ionic/react'
+import {IonGrid, IonItem, IonList, IonPage} from '@ionic/react'
 import {FC} from 'react'
 import {Redirect} from 'react-router'
+import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
 import authState from '../store/authState'
 
@@ -11,7 +12,7 @@ export const Chats: FC = () => {
 	return (
 		<IonPage>
 			<Header title='Chats'/>
-			<IonContent>
+			<Content>
 				<IonGrid fixed className='ion-no-padding'>
 					<IonList>
 						{Array(25).fill(1).map((n, i) => (
@@ -19,7 +20,7 @@ export const Chats: FC = () => {
 						))}
 					</IonList>
 				</IonGrid>
-			</IonContent>
+			</Content>
 		</IonPage>
 	)
 }
