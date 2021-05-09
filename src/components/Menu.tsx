@@ -1,13 +1,16 @@
 import {IonButton, IonContent, IonFooter, IonHeader, IonItem, IonLabel, IonMenu, IonTitle, IonToolbar} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import {FC, useRef} from 'react'
+import appState from '../store/appState'
 import authState from '../store/authState'
 
 export const Menu: FC = observer(() => {
 	const menuRef = useRef<HTMLIonMenuElement>(null)
 
 	const onClick = async () => {
+		appState.setIsLoading(true)
 		await authState.signOut()
+		appState.setIsLoading(false)
 		await menuRef.current!.close()
 	}
 
