@@ -1,0 +1,8 @@
+.progressBar {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.show {
+    opacity: 1;
+}
