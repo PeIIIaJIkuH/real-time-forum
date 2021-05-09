@@ -62,3 +62,18 @@ export const loginValidationSchema = yup.object({
 		.nullable()
 		.required('Required')
 })
+
+export const postValidationSchema = yup.object({
+	title: yup
+		.string()
+		.nullable()
+		.trim('Can not start or end with whitespaces')
+		.strict(true)
+		.required('Required'),
+	content: yup
+		.string()
+		.nullable()
+		.trim('Can not start or end with whitespaces')
+		.strict(true)
+		.required('Required')
+})
