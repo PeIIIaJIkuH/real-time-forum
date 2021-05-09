@@ -22,7 +22,6 @@ export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
 
 	const onSubmit = async (values: FormikValues) => {
 		const response = await authAPI.signIn(values as LoginValues)
-		console.log(response)
 		if (response.state) {
 			await authState.fetchUserData()
 		} else {
