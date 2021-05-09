@@ -65,3 +65,8 @@ export interface ApiResponse {
 	message: string
 	data: any
 }
+
+export interface PostValues {
+	title: string | null
+	content: string | null
+}
