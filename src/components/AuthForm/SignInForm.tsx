@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
-	const toastError = useIonToast()[0]
+	const toast = useIonToast()[0]
 
 	const initialValues: LoginValues = {
 		usernameOrEmail: null,
@@ -28,7 +28,7 @@ export const SignInForm: FC<Props> = ({slideNext, innerRef}) => {
 		if (response.state) {
 			await authState.fetchUserData()
 		} else {
-			toastError({message: response.message, duration: toastDuration, color: 'danger'})
+			toast({message: response.message, duration: toastDuration, color: 'danger'})
 		}
 		appState.setIsLoading(false)
 	}

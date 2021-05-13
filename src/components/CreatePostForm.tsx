@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const CreatePostForm: FC<Props> = ({closeModal}) => {
-	const toastError = useIonToast()[0]
+	const toast = useIonToast()[0]
 
 	const initialValues: PostValues = {
 		title: null,
