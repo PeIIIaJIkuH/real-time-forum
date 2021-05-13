@@ -16,10 +16,8 @@ class AuthState {
 	async fetchUserData() {
 		const response = await authAPI.me()
 		if (response.state) {
-			const {nickname, email, firstName, lastName, age, gender, createdAt, lastActive} = response.data
-			this.setUser({
-				username: nickname, email, firstName, lastName, age, gender, createdAt, lastActive
-			})
+			const data = response.data
+			this.setUser(data)
 		} else {
 
 		}
