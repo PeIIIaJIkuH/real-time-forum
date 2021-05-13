@@ -17,8 +17,7 @@ interface Props {
 }
 
 export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
-	const toastSuccess = useIonToast()[0],
-		toastError = useIonToast()[0]
+	const toast = useIonToast()[0]
 
 	const initialValues: RegisterValues = {
 		username: null,
@@ -35,10 +34,10 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 		appState.setIsLoading(true)
 		const response = await authAPI.signUp(values as RegisterValues)
 		if (response.state) {
-			toastSuccess({message: response.message, duration: toastDuration, color: 'success'})
+			toast({message: response.message, duration: toastDuration, color: 'success'})
 			slidePrev()
 		} else {
-			toastError({message: response.message, duration: toastDuration, color: 'danger'})
+			toast({message: response.message, duration: toastDuration, color: 'danger'})
 		}
 		appState.setIsLoading(false)
 	}
