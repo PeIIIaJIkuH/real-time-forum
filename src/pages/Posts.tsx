@@ -1,47 +1,21 @@
-import {
-	IonCard,
-	IonCardContent,
-	IonCardHeader,
-	IonCardSubtitle,
-	IonCardTitle,
-	IonCol,
-	IonFab,
-	IonFabButton,
-	IonGrid,
-	IonIcon,
-	IonModal,
-	IonPage,
-	IonRow
-} from '@ionic/react'
+import {IonFab, IonFabButton, IonGrid, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonModal, IonPage} from '@ionic/react'
 import {addOutline} from 'ionicons/icons'
-import {FC, useState} from 'react'
+import {observer} from 'mobx-react-lite'
+import {FC, useEffect, useState} from 'react'
 import {Content} from '../components/Content/Content'
-import {CreatePostForm} from '../components/CreatePostForm'
 import {Header} from '../components/Header'
-import {IPost} from '../types'
+import {Post} from '../components/Post'
+import authState from '../store/authState'
+import postsState from '../store/postsState'
+import postsStore from '../store/postsState'
+import {CreatePost} from './CreatePost'
 
-const posts: IPost[] = [{
-	id: '1',
-	authorId: '1',
-	title: 'Post 1',
-	content: 'Content 1',
-	categories: [{id: '1', text: 'text'}, {id: '2', text: 'about'}],
-	comments: [],
-	createdAt: Date.now()
-}, {
-	id: '2', authorId: '1', title: 'Post 2', content: 'Content 2', categories: [], comments: [], createdAt: Date.now()
-}, {
-	id: '3', authorId: '1', title: 'Post 3', content: 'Content 3', categories: [], comments: [], createdAt: Date.now()
-}, {
-	id: '4', authorId: '1', title: 'Post 4', content: 'Content 4', categories: [], comments: [], createdAt: Date.now()
-}, {
-	id: '5', authorId: '1', title: 'Post 5', content: 'Content 5', categories: [], comments: [], createdAt: Date.now()
-}, {
-	id: '6', authorId: '1', title: 'Post 6', content: 'Content 6', categories: [], comments: [], createdAt: Date.now()
-}]
-
-export const Posts: FC = () => {
+export const Posts: FC = observer(() => {
 	const [isOpen, setIsOpen] = useState(false)
+
+	useEffect(() => {
+		postsStore.fetchAllPosts().then()
+	}, [])
 
 	const openModal = () => {
 		setIsOpen(true)
@@ -51,34 +25,32 @@ export const Posts: FC = () => {
 		setIsOpen(false)
 	}
 
+	const onInfinite = async (e: any) => {
+		await postsState.fetchAllPosts()
+		e.target!.complete!()
+	}
+
 	return (
 		<IonPage>
 			<Header title='Posts'/>
 			<Content>
 				<IonFab vertical='bottom' horizontal='end' slot='fixed'>
-					<IonFabButton onClick={openModal}>
+					<IonFabButton onClick={openModal} disabled={!authState.user}>
 						<IonIcon icon={addOutline} size='large'/>
 					</IonFabButton>
 				</IonFab>
 				<IonModal isOpen={isOpen}>
-					<CreatePostForm closeModal={closeModal}/>
+					<CreatePost closeModal={closeModal}/>
 				</IonModal>
 				<IonGrid fixed>
-					{posts.map(post => (
-						<IonRow key={post.id}>
-							<IonCol>
-								<IonCard>
-									<IonCardHeader>
-										<IonCardTitle>{post.title}</IonCardTitle>
-										<IonCardSubtitle>{post.authorId}</IonCardSubtitle>
-									</IonCardHeader>
-									<IonCardContent>{post.content}</IonCardContent>
-								</IonCard>
-							</IonCol>
-						</IonRow>
+					{postsStore.posts?.map(post => (
+						<Post post={post} key={post.id} clickable/>
 					))}
+					<IonInfiniteScroll threshold='100px' onIonInfinite={onInfinite} disabled={postsState.completed}>
+						<IonInfiniteScrollContent/>
+					</IonInfiniteScroll>
 				</IonGrid>
 			</Content>
 		</IonPage>
 	)
-}
+})

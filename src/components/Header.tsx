@@ -4,17 +4,25 @@ import {FC} from 'react'
 
 interface Props {
 	title: string
+	backButton?: JSX.Element
+	showMenu?: boolean
 }
 
-export const Header: FC<Props> = observer(({title}) => {
-	return (
-		<IonHeader translucent>
-			<IonToolbar>
-				<IonTitle>{title}</IonTitle>
-				<IonButtons slot='end'>
-					<IonMenuButton/>
-				</IonButtons>
-			</IonToolbar>
-		</IonHeader>
-	)
-})
+export const Header: FC<Props> = observer(({title, backButton, showMenu = true}) => {
+		return (
+			<IonHeader translucent>
+				<IonToolbar>
+					<IonButtons slot='start'>
+						{backButton}
+					</IonButtons>
+					<IonTitle>{title}</IonTitle>
+					{showMenu && (
+						<IonButtons slot='end'>
+							<IonMenuButton/>
+						</IonButtons>
+					)}
+				</IonToolbar>
+			</IonHeader>
+		)
+	}
+)

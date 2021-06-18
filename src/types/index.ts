@@ -7,38 +7,39 @@ export interface IUser {
 	gender: IGender
 	createdAt: number
 	lastActive: number
+	status: IUserStatus
 }
 
 export interface ICategory {
-	id: string
-	text: string
+	id: number
+	name: string
 }
 
 export interface IPost {
-	id: string
-	authorId: string
+	id: number
+	author: IUser
 	title: string
 	content: string
 	createdAt: number
 	categories: ICategory[]
-	comments: IComment[]
+	commentsNumber: number
 }
 
 export interface IComment {
-	id: string
-	authorId: string
-	postId: string
-	text: string
+	id: number
+	author: IUser
+	postId: number
+	content: string
 	createdAt: number
 }
 
 export interface IMessage {
-	id: string
-	authorId: string
+	id: number
+	authorId: number
 }
 
 export interface IChat {
-	id: string
+	id: number
 }
 
 export interface LoginValues {
@@ -47,6 +48,7 @@ export interface LoginValues {
 }
 
 export type IGender = 'male' | 'female' | 'other'
+export type IUserStatus = 'online' | 'offline'
 
 export interface RegisterValues {
 	username: string | null
@@ -69,4 +71,9 @@ export interface ApiResponse {
 export interface PostValues {
 	title: string | null
 	content: string | null
+	categories: string | null
+}
+
+export interface CommentValues {
+	comment: string | null
 }

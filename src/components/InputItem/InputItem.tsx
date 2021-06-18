@@ -1,7 +1,7 @@
 import {TextFieldTypes} from '@ionic/core'
 import {IonInput, IonItem, IonLabel} from '@ionic/react'
 import clsx from 'clsx'
-import {FC, KeyboardEventHandler} from 'react'
+import {FC, KeyboardEventHandler, useRef} from 'react'
 import {ErrorItem} from '../ErrorItem/ErrorItem'
 import s from './InputItem.module.css'
 
@@ -17,8 +17,11 @@ interface Props {
 }
 
 export const InputItem: FC<Props> = ({
-										 touched, error, value, name, label, handleChange, type, handleSubmit
+										 touched, error, value, name, label, handleChange,
+										 type, handleSubmit = false
 									 }) => {
+	const ref = useRef<HTMLIonInputElement>(null)
+
 	const onKeyDown: KeyboardEventHandler = (e) => {
 		if (e.key === 'Enter')
 			handleSubmit()
@@ -27,7 +30,7 @@ export const InputItem: FC<Props> = ({
 	return <>
 		<IonItem className={clsx(touched && error && s.incorrect)}>
 			<IonLabel position='floating'>{label}</IonLabel>
-			<IonInput type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}/>
+			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}/>
 		</IonItem>
 		{touched && error && (
 			<ErrorItem message={error}/>

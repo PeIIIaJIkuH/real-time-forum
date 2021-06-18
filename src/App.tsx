@@ -15,13 +15,13 @@ import '@ionic/react/css/structure.css'
 import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/typography.css'
-import {chatbubbleEllipsesOutline, logInOutline, personOutline, readerOutline} from 'ionicons/icons'
+import {chatbubbleEllipsesOutline, personOutline, readerOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
-import {Menu} from './components/Menu'
-import {Auth} from './pages/Auth/Auth'
+import {SideMenu} from './components/SideMenu'
 import {Chats} from './pages/Chats'
+import {PostPage} from './pages/PostPage'
 import {Posts} from './pages/Posts'
 import {Profile} from './pages/Profile'
 import authState from './store/authState'
@@ -35,16 +35,16 @@ export const App: FC = observer(() => {
 	}, [])
 
 	return <>
-		<Menu/>
+		<SideMenu/>
 		<IonApp>
 			<IonReactRouter>
 				<IonTabs>
 					<IonRouterOutlet id='main'>
 						<Switch>
+							<Route exact path='/posts/:id'><PostPage/></Route>
 							<Route exact path='/posts'><Posts/></Route>
 							<Route exact path='/chats'><Chats/></Route>
 							<Route exact path='/profile'><Profile/></Route>
-							<Route exact path='/auth'><Auth/></Route>
 							<Redirect exact path='/' to='/posts'/>
 						</Switch>
 					</IonRouterOutlet>
@@ -53,27 +53,20 @@ export const App: FC = observer(() => {
 							<IonIcon icon={readerOutline}/>
 							<IonLabel>Posts</IonLabel>
 						</IonTabButton>
-						{authState.user && (
-							<IonTabButton tab='chats' href='/chats'>
-								<IonIcon icon={chatbubbleEllipsesOutline}/>
-								<IonLabel>Chats</IonLabel>
-							</IonTabButton>
-						)}
-						{authState.user && (
-							<IonTabButton tab='profile' href='/profile'>
-								<IonIcon icon={personOutline}/>
-								<IonLabel>Profile</IonLabel>
-							</IonTabButton>
-						)}
-						{!authState.user && (
-							<IonTabButton tab='auth' href='/auth'>
-								<IonIcon icon={logInOutline}/>
-								<IonLabel>Auth</IonLabel>
-							</IonTabButton>
-						)}
+						<IonTabButton tab='chats' href='/chats' disabled={!authState.user}>
+							<IonIcon icon={chatbubbleEllipsesOutline}/>
+							<IonLabel>Chats</IonLabel>
+						</IonTabButton>
+						<IonTabButton tab='profile' href='/profile' disabled={!authState.user}>
+							<IonIcon icon={personOutline}/>
+							<IonLabel>Profile</IonLabel>
+						</IonTabButton>
 					</IonTabBar>
 				</IonTabs>
 			</IonReactRouter>
 		</IonApp>
 	</>
 })
+
+// TODO:
+// make progress bar visible only in state

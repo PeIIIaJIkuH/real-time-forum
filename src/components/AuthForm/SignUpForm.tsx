@@ -1,7 +1,7 @@
 import {IonButton, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, useIonToast} from '@ionic/react'
 import clsx from 'clsx'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
-import {FC, RefObject} from 'react'
+import {FC} from 'react'
 import {authAPI} from '../../api/auth'
 import appState from '../../store/appState'
 import {RegisterValues} from '../../types'
@@ -12,11 +12,10 @@ import {InputItem} from '../InputItem/InputItem'
 import s from './AuthForm.module.css'
 
 interface Props {
-	slidePrev: () => void
-	innerRef: RefObject<HTMLFormElement>
+	toggle: () => void
 }
 
-export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
+export const SignUpForm: FC<Props> = ({toggle}) => {
 	const toast = useIonToast()[0]
 
 	const initialValues: RegisterValues = {
@@ -35,21 +34,17 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 		const response = await authAPI.signUp(values as RegisterValues)
 		if (response.state) {
 			toast({message: response.message, duration: toastDuration, color: 'success'})
-			slidePrev()
+			toggle()
 		} else {
 			toast({message: response.message, duration: toastDuration, color: 'danger'})
 		}
 		appState.setIsLoading(false)
 	}
 
-	const onClick = () => {
-		slidePrev()
-	}
-
 	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registerValidationSchema}>
 			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<RegisterValues>) => (
-				<Form ref={innerRef} onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
+				<Form onSubmit={handleSubmit} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
 					<IonList>
 						<InputItem touched={touched.username} error={errors.username} value={values.username} type='text' name='username'
 								   label='Username' handleChange={handleChange} handleSubmit={handleSubmit}/>
@@ -67,7 +62,7 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 								   label='Age' handleChange={handleChange} handleSubmit={handleSubmit}/>
 						<IonItem className={clsx(touched.gender && errors.gender ? s.incorrect : s.correct)}>
 							<IonLabel position='floating'>Gender</IonLabel>
-							<IonSelect name='gender' value={values.gender} interface='popover' onIonChange={handleChange}>
+							<IonSelect name='gender' value={values.gender} interface='action-sheet' onIonChange={handleChange}>
 								<IonSelectOption value='male'>Male</IonSelectOption>
 								<IonSelectOption value='female'>Female</IonSelectOption>
 								<IonSelectOption value='other'>Other</IonSelectOption>
@@ -77,7 +72,7 @@ export const SignUpForm: FC<Props> = ({slidePrev, innerRef}) => {
 							<ErrorItem message={errors.gender}/>
 						)}
 						<IonButton type='submit' expand='full' className='ion-margin'>Register</IonButton>
-						<IonButton expand='full' className='ion-margin' fill='clear' onClick={onClick}>Log In</IonButton>
+						<IonButton expand='full' className='ion-margin' fill='clear' onClick={toggle}>Log In</IonButton>
 					</IonList>
 				</Form>
 			)}
