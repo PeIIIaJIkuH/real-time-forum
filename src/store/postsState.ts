@@ -6,6 +6,7 @@ class PostsState {
 	posts: IPost[] = []
 	lastPostId: number = 0
 	completed: boolean = false
+	limit: number = 5
 
 	constructor() {
 		makeAutoObservable(this)
@@ -28,7 +29,7 @@ class PostsState {
 	}
 
 	async fetchAllPosts() {
-		const response = await postsAPI.getAllPosts(this.lastPostId, 5)
+		const response = await postsAPI.getAllPosts(this.lastPostId, this.limit)
 		if (!response.data) {
 			this.setCompleted(true)
 			return
@@ -40,10 +41,16 @@ class PostsState {
 
 	async fetchCreatedPosts(limit: number) {
 		const response = await postsAPI.getAllPosts(0, limit)
-		console.log(response)
 		if (response.state) {
 			this.setPosts([...response.data, ...this.posts])
 		}
+	}
+
+	async refreshPosts() {
+		this.setLastPostId(0)
+		this.setCompleted(false)
+		this.setPosts([])
+		await this.fetchAllPosts()
 	}
 }
 

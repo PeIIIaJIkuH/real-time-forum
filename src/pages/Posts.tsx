@@ -1,4 +1,16 @@
-import {IonFab, IonFabButton, IonGrid, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonModal, IonPage} from '@ionic/react'
+import {RefresherEventDetail} from '@ionic/core'
+import {
+	IonFab,
+	IonFabButton,
+	IonGrid,
+	IonIcon,
+	IonInfiniteScroll,
+	IonInfiniteScrollContent,
+	IonModal,
+	IonPage,
+	IonRefresher,
+	IonRefresherContent
+} from '@ionic/react'
 import {addOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
@@ -27,13 +39,21 @@ export const Posts: FC = observer(() => {
 
 	const onInfinite = async (e: any) => {
 		await postsState.fetchAllPosts()
-		e.target!.complete!()
+		e.target!.complete()
+	}
+
+	const refreshPosts = async (e: CustomEvent<RefresherEventDetail>) => {
+		await postsState.refreshPosts()
+		e.detail.complete()
 	}
 
 	return (
 		<IonPage>
 			<Header title='Posts'/>
 			<Content>
+				<IonRefresher slot='fixed' onIonRefresh={refreshPosts}>
+					<IonRefresherContent/>
+				</IonRefresher>
 				<IonFab vertical='bottom' horizontal='end' slot='fixed'>
 					<IonFabButton onClick={openModal} disabled={!authState.user}>
 						<IonIcon icon={addOutline} size='large'/>
@@ -46,7 +66,7 @@ export const Posts: FC = observer(() => {
 					{postsStore.posts?.map(post => (
 						<Post post={post} key={post.id} clickable/>
 					))}
-					<IonInfiniteScroll threshold='100px' onIonInfinite={onInfinite} disabled={postsState.completed}>
+					<IonInfiniteScroll threshold='50px' onIonInfinite={onInfinite} disabled={postsState.completed}>
 						<IonInfiniteScrollContent/>
 					</IonInfiniteScroll>
 				</IonGrid>
