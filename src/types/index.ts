@@ -38,8 +38,16 @@ export interface IMessage {
 	authorId: number
 }
 
-export interface IChat {
+export interface IChatUser {
 	id: number
+	username: string
+	status: string
+}
+
+export interface IChatRoom {
+	id: number
+	lastMessageDate: number
+	user: IChatUser
 }
 
 export interface LoginValues {

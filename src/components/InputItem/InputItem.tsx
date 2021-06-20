@@ -18,7 +18,7 @@ interface Props {
 
 export const InputItem: FC<Props> = ({
 										 touched, error, value, name, label, handleChange,
-										 type, handleSubmit = false
+										 type, handleSubmit
 									 }) => {
 	const ref = useRef<HTMLIonInputElement>(null)
 

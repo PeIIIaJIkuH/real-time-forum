@@ -1,6 +1,7 @@
 import {IonItem, IonLabel} from '@ionic/react'
 import {FC} from 'react'
-import {IComment} from '../types'
+import {IComment} from '../../types'
+import s from './Comment.module.css'
 
 interface Props {
 	comment: IComment
@@ -12,8 +13,10 @@ export const Comment: FC<Props> = ({comment}) => {
 	return (
 		<IonItem>
 			<IonLabel>
-				<h3>{comment.author.username}</h3>
-				<h4>{date.toLocaleString()}</h4>
+				<div className={s.title}>
+					<h5>{comment.author.username}</h5>
+					<h6>{date.toLocaleString()}</h6>
+				</div>
 				<p>{comment.content}</p>
 			</IonLabel>
 		</IonItem>

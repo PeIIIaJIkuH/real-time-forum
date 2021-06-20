@@ -1,0 +1,28 @@
+.subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+.tag {
+    border-radius: 5px;
+    padding: 2px 8px;
+    border: 1px solid #e6e6e6;
+}

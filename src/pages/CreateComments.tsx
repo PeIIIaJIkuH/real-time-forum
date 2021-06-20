@@ -4,6 +4,7 @@ import {arrowBackOutline} from 'ionicons/icons'
 import {FC} from 'react'
 import {postsAPI} from '../api/posts'
 import {TextareaItem} from '../components/TextareaItem/TextareaItem'
+import appState from '../store/appState'
 import postStore from '../store/postState'
 import {CommentValues} from '../types'
 import {toastDuration} from '../utils/constants'
@@ -24,7 +25,9 @@ export const CreateComment: FC<Props> = ({closeModal, postId}) => {
 	const onSubmit = async ({comment}: FormikValues) => {
 		const response = await postsAPI.createComment(comment, postId)
 		if (response.state) {
+			appState.setIsLoading(true)
 			await postStore.fetchComments(String(postId))
+			appState.setIsLoading(false)
 			closeModal()
 			toast({message: response.message, duration: toastDuration, color: 'success'})
 		} else {

@@ -4,6 +4,7 @@ import {IUser} from '../types'
 
 class AuthState {
 	user: IUser | null = null
+	connected: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -12,12 +13,17 @@ class AuthState {
 	setUser(user: IUser | null) {
 		this.user = user
 	}
+	
+	setConnected(connected: boolean) {
+		this.connected = connected
+	}
 
 	async fetchUserData() {
 		const response = await authAPI.me()
 		if (response.state) {
 			const data = response.data
 			this.setUser(data)
+			this.setConnected(true)
 		} else {
 
 		}

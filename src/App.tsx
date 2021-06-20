@@ -20,7 +20,7 @@ import {observer} from 'mobx-react-lite'
 import {FC, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
 import {SideMenu} from './components/SideMenu'
-import {Chats} from './pages/Chats'
+import {ChatsPage} from './pages/ChatsPage'
 import {PostPage} from './pages/PostPage'
 import {Posts} from './pages/Posts'
 import {Profile} from './pages/Profile'
@@ -43,7 +43,7 @@ export const App: FC = observer(() => {
 						<Switch>
 							<Route exact path='/posts/:id'><PostPage/></Route>
 							<Route exact path='/posts'><Posts/></Route>
-							<Route exact path='/chats'><Chats/></Route>
+							<Route exact path='/chats'><ChatsPage/></Route>
 							<Route exact path='/profile'><Profile/></Route>
 							<Redirect exact path='/' to='/posts'/>
 						</Switch>
@@ -67,6 +67,3 @@ export const App: FC = observer(() => {
 		</IonApp>
 	</>
 })
-
-// TODO:
-// make progress bar visible only in state

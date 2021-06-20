@@ -3,10 +3,10 @@ import {chatboxEllipsesOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
 import {useParams} from 'react-router'
-import {Comment} from '../components/Comment'
+import {Comment} from '../components/Comment/Comment'
 import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
-import {Post} from '../components/Post'
+import {Post} from '../components/Post/Post'
 import authState from '../store/authState'
 import postStore from '../store/postState'
 import {CreateComment} from './CreateComments'
@@ -31,7 +31,7 @@ export const PostPage: FC = observer(() => {
 	useEffect(() => {
 		return () => {
 			postStore.setPost(null)
-			postStore.setComments(null)
+			postStore.setComments([])
 		}
 	}, [])
 
@@ -51,7 +51,9 @@ export const PostPage: FC = observer(() => {
 				<IonGrid fixed>
 					<Post post={postStore.post!}/>
 					<IonList>
-						<IonListHeader>Comments</IonListHeader>
+						<IonListHeader>
+							<h3>{postStore.comments ? 'Comments' : 'No Comments'}</h3>
+						</IonListHeader>
 						{postStore.comments?.map(comment => (
 							<Comment comment={comment} key={comment.id}/>
 						))}

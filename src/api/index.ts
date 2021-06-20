@@ -22,4 +22,4 @@ defaultAxios.interceptors.response.use(r => {
 			break
 	}
 	return r.data
-}, e => e.response.data)
+}, e => e.response?.data || {state: false})

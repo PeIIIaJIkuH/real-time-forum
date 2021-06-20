@@ -1,6 +1,7 @@
 import {makeAutoObservable} from 'mobx'
 import {postsAPI} from '../api/posts'
 import {IPost} from '../types'
+import appState from './appState'
 
 class PostsState {
 	posts: IPost[] = []
@@ -29,7 +30,9 @@ class PostsState {
 	}
 
 	async fetchAllPosts() {
+		appState.setIsLoading(true)
 		const response = await postsAPI.getAllPosts(this.lastPostId, this.limit)
+		appState.setIsLoading(false)
 		if (!response.data) {
 			this.setCompleted(true)
 			return
@@ -40,17 +43,22 @@ class PostsState {
 	}
 
 	async fetchCreatedPosts(limit: number) {
+		appState.setIsLoading(true)
 		const response = await postsAPI.getAllPosts(0, limit)
+		appState.setIsLoading(false)
 		if (response.state) {
 			this.setPosts([...response.data, ...this.posts])
 		}
+
 	}
 
 	async refreshPosts() {
+		appState.setIsLoading(true)
 		this.setLastPostId(0)
 		this.setCompleted(false)
 		this.setPosts([])
 		await this.fetchAllPosts()
+		appState.setIsLoading(false)
 	}
 }
 

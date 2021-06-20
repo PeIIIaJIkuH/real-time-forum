@@ -1,11 +1,12 @@
 import {makeAutoObservable} from 'mobx'
 import {postsAPI} from '../api/posts'
 import {IComment, IPost} from '../types'
+import appState from './appState'
 
 class PostState {
 	post: IPost | null = null
 	postError: boolean = false
-	comments: IComment[] | null = null
+	comments: IComment[] = []
 	commentsError: boolean = false
 
 	constructor() {
@@ -20,7 +21,7 @@ class PostState {
 		this.postError = error
 	}
 
-	setComments(comments: IComment[] | null) {
+	setComments(comments: IComment[]) {
 		this.comments = comments
 	}
 
@@ -29,7 +30,9 @@ class PostState {
 	}
 
 	async fetchPost(id: string) {
+		appState.setIsLoading(true)
 		const response = await postsAPI.getPostById(id)
+		appState.setIsLoading(false)
 		if (!response.state) {
 			this.setPostError(true)
 			return
@@ -39,7 +42,9 @@ class PostState {
 	}
 
 	async fetchComments(postId: string) {
+		appState.setIsLoading(true)
 		const response = await postsAPI.getPostComments(postId, 0, 10)
+		appState.setIsLoading(false)
 		if (!response.state) {
 			this.setCommentsError(true)
 			return
