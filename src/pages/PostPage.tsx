@@ -1,5 +1,5 @@
 import {IonBackButton, IonFab, IonFabButton, IonGrid, IonIcon, IonList, IonListHeader, IonModal, IonPage} from '@ionic/react'
-import {chatboxEllipsesOutline} from 'ionicons/icons'
+import {chatboxOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
 import {useParams} from 'react-router'
@@ -45,7 +45,7 @@ export const PostPage: FC = observer(() => {
 			<Content>
 				<IonFab vertical='bottom' horizontal='end' slot='fixed'>
 					<IonFabButton onClick={openModal} disabled={!authState.user}>
-						<IonIcon icon={chatboxEllipsesOutline} size='large'/>
+						<IonIcon icon={chatboxOutline} size='large'/>
 					</IonFabButton>
 				</IonFab>
 				<IonGrid fixed>
