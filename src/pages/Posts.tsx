@@ -26,7 +26,7 @@ export const Posts: FC = observer(() => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	useEffect(() => {
-		postsStore.fetchAllPosts().then()
+		postsStore.fetchPosts().then()
 	}, [])
 
 	const openModal = () => {
@@ -38,7 +38,7 @@ export const Posts: FC = observer(() => {
 	}
 
 	const onInfinite = async (e: any) => {
-		await postsState.fetchAllPosts()
+		await postsState.fetchPosts()
 		e.target!.complete()
 	}
 

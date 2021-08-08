@@ -29,7 +29,7 @@ class PostsState {
 		this.completed = completed
 	}
 
-	async fetchAllPosts() {
+	async fetchPosts() {
 		appState.setIsLoading(true)
 		const response = await postsAPI.getAllPosts(this.lastPostId, this.limit)
 		appState.setIsLoading(false)
@@ -57,7 +57,7 @@ class PostsState {
 		this.setLastPostId(0)
 		this.setCompleted(false)
 		this.setPosts([])
-		await this.fetchAllPosts()
+		await this.fetchPosts()
 		appState.setIsLoading(false)
 	}
 }

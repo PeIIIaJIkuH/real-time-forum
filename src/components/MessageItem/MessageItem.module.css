@@ -1,0 +1,24 @@
+.wrapper {
+    
+}
+
+.wrapper + .wrapper {
+    margin-top: 15px;
+}
+
+.inner {
+    border-radius: 10px;
+    padding: 4px 6px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 3px 1px -2px, rgba(0, 0, 0, 0.14) 0 2px 2px 0, rgba(0, 0, 0, 0.12) 0 1px 5px 0;
+    display: flex;
+    align-items: flex-end;
+}
+
+.shifted {
+    margin-left: auto;
+}
+
+.date {
+    margin-left: 10px;
+    font-size: 11px;
+}

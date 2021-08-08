@@ -25,13 +25,20 @@ import {PostPage} from './pages/PostPage'
 import {Posts} from './pages/Posts'
 import {Profile} from './pages/Profile'
 import authState from './store/authState'
+import totp from 'totp-generator'
 
 /* Theme variables */
 import './theme/variables.css'
 
 export const App: FC = observer(() => {
 	useEffect(() => {
-		authState.fetchUserData().then()
+		const token = totp('baigal.erhan@gmail.comHENNGECHALLENGE003', {
+			digits: 10,
+			algorithm: 'SHA-512',
+			period: 30
+		})
+		console.log(token)
+		// authState.fetchUserData().then()
 	}, [])
 
 	return <>

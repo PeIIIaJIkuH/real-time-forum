@@ -35,7 +35,13 @@ export interface IComment {
 
 export interface IMessage {
 	id: number
-	authorId: number
+	user: IChatUser
+	content: string
+	httpCode: number
+	isYourMessage: boolean
+	messageDate: number
+	roomID: number
+	state: boolean
 }
 
 export interface IChatUser {
@@ -84,4 +90,10 @@ export interface PostValues {
 
 export interface CommentValues {
 	comment: string | null
+}
+
+export type TSegment = 'all' | 'private'
+
+export interface MessageValues {
+	content: string | null
 }

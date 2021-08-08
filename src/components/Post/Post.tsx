@@ -1,6 +1,7 @@
 import {IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonIcon, IonLabel, IonRow} from '@ionic/react'
 import {chatboxOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
+import moment from 'moment'
 import {FC} from 'react'
 import {useHistory} from 'react-router'
 import {IPost} from '../../types'
@@ -21,41 +22,41 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 		}
 	}
 
-	const createdAt = new Date(post?.createdAt * 1000).toLocaleString()
-
 	return <>
 		<IonRow>
 			<IonCol>
 				<IonCard onClick={onClick}>
-					<IonCardHeader>
-						<IonCardTitle>{post?.title}</IonCardTitle>
-						<IonCardSubtitle>
-							<div className={s.subtitle}>
-								<div>{post?.author.username}</div>
-								<div>{createdAt}</div>
-							</div>
-						</IonCardSubtitle>
-					</IonCardHeader>
-					<IonCardContent>
-						<IonLabel>
-							<div>{post?.content || 'Content'}</div>
-						</IonLabel>
-						<IonLabel>
-							<div className={s.footer}>
-								<div>
-									{post?.categories.map(category => (
-										<div key={category.id} className={s.tag}>
-											{category.name}
-										</div>
-									))}
+					{post && <>
+						<IonCardHeader>
+							<IonCardTitle>{post?.title}</IonCardTitle>
+							<IonCardSubtitle>
+								<div className={s.subtitle}>
+									<div>{post.author.username}</div>
+									<div>{moment(post.createdAt * 1000).fromNow()}</div>
 								</div>
-								<div className={s.comments}>
-									<IonIcon icon={chatboxOutline} className={s.icon}/>
-									{post?.commentsNumber}
+							</IonCardSubtitle>
+						</IonCardHeader>
+						<IonCardContent>
+							<IonLabel>
+								<div>{post.content || 'Content'}</div>
+							</IonLabel>
+							<IonLabel>
+								<div className={s.footer}>
+									<div>
+										{post.categories.map(category => (
+											<div key={category.id} className={s.tag}>
+												{category.name}
+											</div>
+										))}
+									</div>
+									<div className={s.comments}>
+										<IonIcon icon={chatboxOutline} className={s.icon}/>
+										{post.commentsNumber}
+									</div>
 								</div>
-							</div>
-						</IonLabel>
-					</IonCardContent>
+							</IonLabel>
+						</IonCardContent>
+					</>}
 				</IonCard>
 			</IonCol>
 		</IonRow>

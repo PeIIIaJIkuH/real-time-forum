@@ -13,7 +13,7 @@ class AuthState {
 	setUser(user: IUser | null) {
 		this.user = user
 	}
-	
+
 	setConnected(connected: boolean) {
 		this.connected = connected
 	}
@@ -23,10 +23,18 @@ class AuthState {
 		if (response.state) {
 			const data = response.data
 			this.setUser(data)
-			this.setConnected(true)
 		} else {
 
 		}
+		this.setConnected(true)
+	}
+	
+	async signIn() {
+		
+	}
+	
+	async SignUp() {
+		
 	}
 
 	async signOut() {
