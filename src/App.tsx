@@ -20,25 +20,18 @@ import {observer} from 'mobx-react-lite'
 import {FC, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
 import {SideMenu} from './components/SideMenu'
-import {ChatsPage} from './pages/ChatsPage'
+import {ChatsPage} from './pages/ChatsPage/ChatsPage'
 import {PostPage} from './pages/PostPage'
 import {Posts} from './pages/Posts'
 import {Profile} from './pages/Profile'
 import authState from './store/authState'
-import totp from 'totp-generator'
 
 /* Theme variables */
 import './theme/variables.css'
 
 export const App: FC = observer(() => {
 	useEffect(() => {
-		const token = totp('baigal.erhan@gmail.comHENNGECHALLENGE003', {
-			digits: 10,
-			algorithm: 'SHA-512',
-			period: 30
-		})
-		console.log(token)
-		// authState.fetchUserData().then()
+		authState.fetchUserData().then()
 	}, [])
 
 	return <>

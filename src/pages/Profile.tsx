@@ -1,7 +1,7 @@
 import {IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonPage, IonRow} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import moment from 'moment'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {useHistory} from 'react-router'
 import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
@@ -9,6 +9,10 @@ import authState from '../store/authState'
 
 export const Profile: FC = observer(() => {
 	const history = useHistory()
+	
+	useEffect(() => {
+		authState.fetchUserData().then();
+	}, []);
 
 	if (!authState.user && authState.connected) {
 		setTimeout(() => history.push('/posts'))

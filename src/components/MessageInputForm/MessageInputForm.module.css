@@ -1,0 +1,10 @@
+.item {
+    --padding-end: 0;
+    --inner-padding-end: 5px;
+}
+
+.button {
+    --padding-start: 8px;
+    --padding-end: 5px;
+    margin: 0;
+}

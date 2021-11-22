@@ -39,11 +39,12 @@ export const SignInForm: FC<Props> = ({toggle, closeModal}) => {
 			{({values, handleSubmit, handleChange, errors, touched}: FormikProps<LoginValues>) => (
 				<Form onSubmit={handleSubmit}>
 					<IonList>
-						<InputItem touched={touched.usernameOrEmail} error={errors.usernameOrEmail} value={values.usernameOrEmail}
-								   type='text'
-								   name='usernameOrEmail' label='Username or Email' handleChange={handleChange} handleSubmit={handleSubmit}/>
+						<InputItem touched={touched.usernameOrEmail} error={errors.usernameOrEmail} value={values.usernameOrEmail} type='text'
+						           name='usernameOrEmail' label='Username or Email' handleChange={handleChange} handleSubmit={handleSubmit}
+						/>
 						<InputItem touched={touched.password} error={errors.password} value={values.password} type='password'
-								   name='password' label='Password' handleChange={handleChange} handleSubmit={handleSubmit}/>
+						           name='password' label='Password' handleChange={handleChange} handleSubmit={handleSubmit}
+						/>
 						<IonButton type='submit' expand='full' className='ion-margin'>Log In</IonButton>
 						<IonButton expand='full' className='ion-margin' fill='clear' onClick={toggle}>Register</IonButton>
 					</IonList>

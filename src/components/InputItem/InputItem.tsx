@@ -11,15 +11,22 @@ interface Props {
 	value: string | number | null
 	type: TextFieldTypes
 	name: string
-	label: string
+	label?: string
 	handleChange: any
 	handleSubmit: any
+	withLine?: boolean
+	placeholder?: string
+	mode?: 'text' | 'email' | 'numeric'
+	padding?: boolean
 }
 
-export const InputItem: FC<Props> = ({
-										 touched, error, value, name, label, handleChange,
-										 type, handleSubmit
-									 }) => {
+export const InputItem: FC<Props> = (
+	{
+		touched, error, value, name, label, handleChange,
+		type, handleSubmit, withLine = true, placeholder, mode = 'text',
+		padding = true
+	}
+) => {
 	const ref = useRef<HTMLIonInputElement>(null)
 
 	const onKeyDown: KeyboardEventHandler = (e) => {
@@ -28,9 +35,15 @@ export const InputItem: FC<Props> = ({
 	}
 
 	return <>
-		<IonItem className={clsx(touched && error && s.incorrect)}>
-			<IonLabel position='floating'>{label}</IonLabel>
-			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}/>
+		<IonItem className={clsx(touched && error && s.incorrect, !padding && s.noPadding)} lines={withLine ? 'full' : 'none'}>
+			{label && (
+				<IonLabel position='floating'>
+					{label}
+				</IonLabel>
+			)}
+			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}
+			          placeholder={placeholder} inputmode={mode} spellcheck={true} className={s.input}
+			/>
 		</IonItem>
 		{touched && error && (
 			<ErrorItem message={error}/>

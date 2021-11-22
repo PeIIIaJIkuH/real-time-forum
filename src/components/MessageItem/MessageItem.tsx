@@ -12,7 +12,7 @@ interface Props {
 export const MessageItem: FC<Props> = ({message}) => {
 	return (
 		<IonRow className={s.wrapper}>
-			<IonCol className={clsx(s.inner, message.isYourMessage && s.shifted)} size='auto'>
+			<IonCol className={clsx(s.inner, message.isYourMessage && s.myMessage)} size='auto'>
 				<div>{message.content}</div>
 				<div className={s.date}>{moment(message.messageDate * 1000).calendar()}</div>
 			</IonCol>

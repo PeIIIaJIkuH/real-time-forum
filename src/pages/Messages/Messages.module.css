@@ -1,5 +1,4 @@
 .grid {
     padding: 10px;
-    /*border: 1px solid black;*/
-    height: 100%;
+    min-height: 99%;
 }

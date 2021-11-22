@@ -2,3 +2,14 @@
     --highlight-background: var(--ion-color-danger);
     --border-color: var(--ion-color-danger);
 }
+
+.noPadding {
+    width: 100%;
+    flex-direction: column;
+    --padding-start: 0;
+    --padding-end: 0;
+}
+
+.input {
+    
+}

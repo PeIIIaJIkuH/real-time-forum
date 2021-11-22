@@ -43,11 +43,16 @@ class ChatsState {
 		this.lastMessageId = id
 	}
 
-	async fetchChatUsers() {
+	async fetchUsers(type: 'all' | 'online') {
 		this.setChatsUsers([])
 		this.setChatRooms([])
 		appState.setIsLoading(true)
-		const response = await chatsAPI.getAllUsers()
+		let response
+		if (type === 'all') {
+			response = await chatsAPI.getAllUsers()
+		} else {
+			response = await chatsAPI.getOnlineUsers()
+		}
 		appState.setIsLoading(false)
 		if (response.state && response.data) {
 			this.setChatsUsers(response.data)
@@ -59,6 +64,7 @@ class ChatsState {
 		this.setChatRooms([])
 		appState.setIsLoading(true)
 		const response = await chatsAPI.getPrivateChats()
+		console.log('api/v1/chats response', response)
 		appState.setIsLoading(false)
 		if (response.state && response.data) {
 			this.setChatRooms(response.data)
@@ -69,7 +75,7 @@ class ChatsState {
 		appState.setIsLoading(true)
 		console.log(this.room?.id, this.lastMessageId)
 		const response = await chatsAPI.getMessages(this.room?.id!, this.lastMessageId)
-		console.log('response', response)
+		console.log('message response', response)
 		appState.setIsLoading(false)
 		if (!response.data) {
 			this.setCompleted(true)

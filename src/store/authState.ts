@@ -20,9 +20,9 @@ class AuthState {
 
 	async fetchUserData() {
 		const response = await authAPI.me()
+		console.log('me', response)
 		if (response.state) {
-			const data = response.data
-			this.setUser(data)
+			this.setUser(response.data)
 		} else {
 
 		}

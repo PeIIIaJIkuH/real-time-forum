@@ -1,4 +1,5 @@
 export interface IUser {
+	id: number,
 	username: string
 	email: string
 	firstName: string
@@ -37,11 +38,10 @@ export interface IMessage {
 	id: number
 	user: IChatUser
 	content: string
-	httpCode: number
 	isYourMessage: boolean
 	messageDate: number
 	roomID: number
-	state: boolean
+	read: boolean
 }
 
 export interface IChatUser {
@@ -54,6 +54,7 @@ export interface IChatRoom {
 	id: number
 	lastMessageDate: number
 	user: IChatUser
+	unreadMsgNumber: number
 }
 
 export interface LoginValues {
@@ -92,8 +93,10 @@ export interface CommentValues {
 	comment: string | null
 }
 
-export type TSegment = 'all' | 'private'
+export type TSegment = 'all' | 'online' | 'private'
 
 export interface MessageValues {
 	content: string | null
 }
+
+export type WsEventType = 'Message' | 'WsError' | 'WsClosed' | 'PingMessage' | 'PongMessage' | 'TypingInReceiver' | 'TypingInSender'

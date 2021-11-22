@@ -14,8 +14,10 @@
     align-items: flex-end;
 }
 
-.shifted {
+.myMessage {
     margin-left: auto;
+    background: var(--ion-color-primary);
+    color: var(--ion-color-primary-contrast);
 }
 
 .date {

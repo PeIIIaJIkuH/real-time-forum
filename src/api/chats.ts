@@ -1,7 +1,9 @@
 import {ApiResponse} from '../types'
 import {defaultAxios} from './index'
 
-const getAllUsers = (): Promise<ApiResponse> => defaultAxios.get('chats/users')
+const getAllUsers = (): Promise<ApiResponse> => defaultAxios.get('chats/users/all')
+
+const getOnlineUsers = (): Promise<ApiResponse> => defaultAxios.get('chats/users/online')
 
 const getPrivateChats = (): Promise<ApiResponse> => defaultAxios.get('chats')
 
@@ -16,6 +18,7 @@ const getMessages = (id: number, lastMessageId: number): Promise<ApiResponse> =>
 
 export const chatsAPI = {
 	getAllUsers,
+	getOnlineUsers,
 	getPrivateChats,
 	getRoom,
 	getMessages
