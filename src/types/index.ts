@@ -52,9 +52,9 @@ export interface IChatUser {
 
 export interface IChatRoom {
 	id: number
-	lastMessageDate: number
 	user: IChatUser
 	unreadMsgNumber: number
+	lastMessage: IMessage
 }
 
 export interface LoginValues {
@@ -99,4 +99,11 @@ export interface MessageValues {
 	content: string | null
 }
 
-export type WsEventType = 'Message' | 'WsError' | 'WsClosed' | 'PingMessage' | 'PongMessage' | 'TypingInReceiver' | 'TypingInSender'
+export type WsEventType =
+	'Message'
+	| 'WsError'
+	| 'WsClosed'
+	| 'PingMessage'
+	| 'PongMessage'
+	| 'TypingInReceiver'
+	| 'TypingInSender'

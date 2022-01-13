@@ -1,4 +1,14 @@
-import {IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonIcon, IonLabel, IonRow} from '@ionic/react'
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonCol,
+	IonIcon,
+	IonLabel,
+	IonRow,
+} from '@ionic/react'
 import {chatboxOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import moment from 'moment'

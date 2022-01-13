@@ -14,5 +14,5 @@ export const authAPI = {
 	signUp,
 	signIn,
 	signOut,
-	me
+	me,
 }

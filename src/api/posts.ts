@@ -6,13 +6,13 @@ const getCategories = (): Promise<ApiResponse> => defaultAxios.get('categories')
 const createPost = (values: PostValues): Promise<ApiResponse> => defaultAxios.post('post', {
 	title: values.title,
 	content: values.content,
-	categories: [values.categories]
+	categories: [values.categories],
 })
 
 const getAllPosts = (lastPostId: number, limit: number): Promise<ApiResponse> => defaultAxios.post('posts', {
 	option: 'all',
 	lastPostId,
-	limit
+	limit,
 })
 
 const getPostById = (id: string): Promise<ApiResponse> => defaultAxios.get(`posts/${id}`)
@@ -21,13 +21,13 @@ const getPostComments = (postId: string, lastPostId: number, limit: number): Pro
 	option: 'post',
 	'post_id': +postId,
 	lastPostID: lastPostId,
-	limit
+	limit,
 })
 
 const createComment = (comment: string, postId: string): Promise<ApiResponse> => defaultAxios.post('comment', {
 	content: comment,
-	postID: +postId
-}) 
+	postID: +postId,
+})
 
 export const postsAPI = {
 	getCategories,
@@ -35,5 +35,5 @@ export const postsAPI = {
 	getAllPosts,
 	getPostById,
 	getPostComments,
-	createComment
+	createComment,
 }

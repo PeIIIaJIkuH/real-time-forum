@@ -15,8 +15,8 @@ interface Props {
 }
 
 export const TextareaItem: FC<Props> = ({
-											touched, error, value, name, label, handleChange, handleSubmit
-										}) => {
+	                                        touched, error, value, name, label, handleChange, handleSubmit,
+                                        }) => {
 	const onKeyDown: KeyboardEventHandler = (e) => {
 		if (e.key === 'Enter' && e.ctrlKey)
 			handleSubmit()

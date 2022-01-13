@@ -1,4 +1,14 @@
-import {IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonPage, IonRow} from '@ionic/react'
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonCol,
+	IonGrid,
+	IonPage,
+	IonRow,
+} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import moment from 'moment'
 import {FC, useEffect} from 'react'
@@ -9,10 +19,10 @@ import authState from '../store/authState'
 
 export const Profile: FC = observer(() => {
 	const history = useHistory()
-	
+
 	useEffect(() => {
-		authState.fetchUserData().then();
-	}, []);
+		authState.fetchUserData().then()
+	}, [])
 
 	if (!authState.user && authState.connected) {
 		setTimeout(() => history.push('/posts'))
@@ -36,8 +46,10 @@ export const Profile: FC = observer(() => {
 									</IonCardHeader>
 									<IonCardContent>
 										<div><strong>Email:</strong>: {authState.user?.email}</div>
-										<div><strong>Created at</strong>: {moment(authState.user?.createdAt * 1000).calendar()}</div>
-										<div><strong>Last active at</strong>: {moment(authState.user?.lastActive * 1000).fromNow()}</div>
+										<div><strong>Created
+											at</strong>: {moment(authState.user?.createdAt * 1000).calendar()}</div>
+										<div><strong>Last active
+											at</strong>: {moment(authState.user?.lastActive * 1000).fromNow()}</div>
 										<div><strong>Age</strong>: {authState.user?.age}</div>
 										<div><strong>Gender</strong>: {authState.user?.gender}</div>
 									</IonCardContent>

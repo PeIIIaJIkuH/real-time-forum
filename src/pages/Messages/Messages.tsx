@@ -1,45 +1,51 @@
-import {
-	IonButton,
-	IonContent,
-	IonFooter,
-	IonGrid,
-	IonIcon,
-	IonInfiniteScroll,
-	IonPage,
-	IonProgressBar
-} from '@ionic/react'
+import {IonButton, IonFooter, IonIcon, IonPage, IonToolbar} from '@ionic/react'
 import {arrowBackOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
-import {FC, useEffect} from 'react'
+import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {Header} from '../../components/Header'
 import {MessageInputForm} from '../../components/MessageInputForm/MessageInputForm'
-import {MessageItem} from '../../components/MessageItem/MessageItem'
 import chatsState from '../../store/chatsState'
+import {Content} from '../../components/Content/Content'
+import {MessageItem} from '../../components/MessageItem/MessageItem'
+import {toJS} from 'mobx'
+
 import s from './Messages.module.css'
-import clsx from "clsx";
-import appState from "../../store/appState";
+import {chatsAPI} from '../../api/chats'
 
 export const Messages: FC = observer(() => {
-	console.log(appState.isLoading)
-	const closeModal = () => {
-		chatsState.setRoom(null)
+	const [wasOnce, setWasOnce] = useState(false)
+	const observer = useRef<IntersectionObserver>()
+	const endRef = useRef<HTMLDivElement>(null)
+	const scrollToBottom = () => {
+		console.log(wasOnce)
+		if (!wasOnce) {
+			setTimeout(() => {
+				endRef.current?.scrollIntoView({behavior: 'smooth'})
+			}, 10)
+		}
 	}
 
+	const detectorRef = useCallback(node => {
+		observer.current && observer.current.disconnect()
+		observer.current = new IntersectionObserver(async entries => {
+			if (entries[0].isIntersecting) {
+				await chatsState.fetchMessages(scrollToBottom)
+				setTimeout(() => {
+					setWasOnce(true)
+				})
+			}
+		})
+		node && observer.current.observe(node)
+	}, [chatsState.completed, observer.current])
+
 	const backButton = (
-		<IonButton onClick={closeModal}>
+		<IonButton onClick={() => chatsState.setRoom(null)}>
 			<IonIcon icon={arrowBackOutline} slot='icon-only'/>
 		</IonButton>
 	)
 
-	const onInfinite = async (e: any) => {
-		console.log('123')
-		await chatsState.fetchMessages()
-		e.target!.complete()
-	}
-
 	useEffect(() => {
-		chatsState.fetchMessages().then()
-
+		chatsAPI.readMessages(chatsState.room?.id!).then()
 		return () => {
 			chatsState.setMessages([])
 			chatsState.setLastMessageId(0)
@@ -50,19 +56,19 @@ export const Messages: FC = observer(() => {
 	return (
 		<IonPage>
 			<Header title={chatsState.room?.user.username!} backButton={backButton}/>
-			<IonContent>
-				<IonProgressBar type='indeterminate' className={clsx(s.progressBar, appState.isLoading && s.show)}/>
-				<IonInfiniteScroll
-					threshold='10%' onIonInfinite={onInfinite} disabled={chatsState.completed} position='top'
-				/>
-				<IonGrid className={s.grid}>
-					{chatsState.messages.map(message => (
+			<Content>
+				<div className={s.messages}>
+					<div ref={detectorRef}/>
+					{toJS(chatsState.messages).reverse().map(message => (
 						<MessageItem message={message} key={message.id}/>
 					))}
-				</IonGrid>
-			</IonContent>
+					<div ref={endRef}/>
+				</div>
+			</Content>
 			<IonFooter>
-				<MessageInputForm/>
+				<IonToolbar>
+					<MessageInputForm endRef={endRef}/>
+				</IonToolbar>
 			</IonFooter>
 		</IonPage>
 	)

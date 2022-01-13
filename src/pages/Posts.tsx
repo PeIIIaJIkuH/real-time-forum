@@ -9,7 +9,7 @@ import {
 	IonModal,
 	IonPage,
 	IonRefresher,
-	IonRefresherContent
+	IonRefresherContent,
 } from '@ionic/react'
 import {addOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'

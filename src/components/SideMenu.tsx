@@ -11,7 +11,7 @@ import {
 	IonModal,
 	IonRow,
 	IonTitle,
-	IonToolbar
+	IonToolbar,
 } from '@ionic/react'
 import {closeOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'

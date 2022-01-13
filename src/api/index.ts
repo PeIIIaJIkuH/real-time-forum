@@ -4,7 +4,7 @@ import {getCSRFToken, setCSRFToken} from '../utils/helpers'
 
 export const defaultAxios = axios.create({
 	baseURL: 'http://localhost:8081/api/v1/',
-	withCredentials: true
+	withCredentials: true,
 })
 
 defaultAxios.interceptors.request.use(c => {

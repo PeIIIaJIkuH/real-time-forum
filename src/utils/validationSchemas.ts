@@ -49,7 +49,7 @@ export const registerValidationSchema = yup.object({
 	gender: yup
 		.string()
 		.nullable()
-		.required('Required')
+		.required('Required'),
 })
 
 export const loginValidationSchema = yup.object({
@@ -60,7 +60,7 @@ export const loginValidationSchema = yup.object({
 	password: yup
 		.string()
 		.nullable()
-		.required('Required')
+		.required('Required'),
 })
 
 export const postValidationSchema = yup.object({
@@ -79,7 +79,7 @@ export const postValidationSchema = yup.object({
 	categories: yup
 		.string()
 		.nullable()
-		.required('Required')
+		.required('Required'),
 })
 
 export const commentValidationSchema = yup.object({
@@ -88,5 +88,5 @@ export const commentValidationSchema = yup.object({
 		.nullable()
 		.trim('Can not start or end with whitespaces')
 		.strict(true)
-		.required('Required')
+		.required('Required'),
 })

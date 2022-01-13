@@ -1,22 +1,26 @@
-import {IonButton, IonIcon, IonItem, useIonToast} from '@ionic/react'
+import {IonButton, IonIcon, IonItem} from '@ionic/react'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {send} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, RefObject, useEffect, useRef, useState} from 'react'
 import appState from '../../store/appState'
 import authState from '../../store/authState'
 import chatsState from '../../store/chatsState'
 import {MessageValues, WsEventType} from '../../types'
 import {InputItem} from '../InputItem/InputItem'
 import s from './MessageInputForm.module.css'
+import {chatsAPI} from '../../api/chats'
 
-export const MessageInputForm: FC = observer(() => {
-	const toast = useIonToast()[0],
-		socket = useRef<WebSocket>(),
+interface Props {
+	endRef?: RefObject<HTMLDivElement>
+}
+
+export const MessageInputForm: FC<Props> = observer(({endRef}) => {
+	const socket = useRef<WebSocket>(),
 		[id, setId] = useState(0)
 
 	const initialValues: MessageValues = {
-		content: null
+		content: null,
 	}
 
 	const onSubmit = async (values: FormikValues, {resetForm}: any) => {
@@ -27,7 +31,7 @@ export const MessageInputForm: FC = observer(() => {
 		appState.setIsLoading(false)
 		socket.current?.send(JSON.stringify({
 			content: values.content,
-			eventType: 'Message'
+			eventType: 'Message',
 		}))
 		resetForm()
 	}
@@ -44,18 +48,24 @@ export const MessageInputForm: FC = observer(() => {
 		socket.current!.onmessage = (e) => {
 			const data = JSON.parse(e.data)
 			const eventType: WsEventType = data.eventType
-			console.log('message', data)
 			switch (eventType) {
 				case 'Message':
+					const isYourMessage = data.message.user.id === authState.user?.id
 					const message = {
 						...data.message,
-						isYourMessage: data.message.user.id === authState.user?.id
+						isYourMessage,
+					}
+					if (!isYourMessage) {
+						chatsAPI.readMessage(chatsState.room?.id!, message.id).then()
 					}
 					chatsState.pushFront([message])
+					setTimeout(() => {
+						endRef?.current?.scrollIntoView({behavior: 'smooth'})
+					}, 10)
 					break
 				case 'PingMessage':
 					socket.current?.send(JSON.stringify({
-						eventType: 'PongMessage'
+						eventType: 'PongMessage',
 					}))
 					break
 				case 'WsError':

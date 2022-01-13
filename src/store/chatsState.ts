@@ -10,6 +10,7 @@ class ChatsState {
 	messages: IMessage[] = []
 	completed: boolean = false
 	lastMessageId: number = 0
+	loading: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -31,6 +32,10 @@ class ChatsState {
 		this.messages = messages
 	}
 
+	pushBack(messages: IMessage[]) {
+		this.messages = [...this.messages, ...messages]
+	}
+
 	pushFront(messages: IMessage[]) {
 		this.messages = [...messages, ...this.messages]
 	}
@@ -41,6 +46,10 @@ class ChatsState {
 
 	setLastMessageId(id: number) {
 		this.lastMessageId = id
+	}
+
+	setLoading(loading: boolean) {
+		this.loading = loading
 	}
 
 	async fetchUsers(type: 'all' | 'online') {
@@ -64,24 +73,27 @@ class ChatsState {
 		this.setChatRooms([])
 		appState.setIsLoading(true)
 		const response = await chatsAPI.getPrivateChats()
-		console.log('api/v1/chats response', response)
 		appState.setIsLoading(false)
 		if (response.state && response.data) {
 			this.setChatRooms(response.data)
 		}
 	}
 
-	async fetchMessages() {
+	async fetchMessages(callback?: () => void) {
+		if (this.loading) return
 		appState.setIsLoading(true)
-		console.log(this.room?.id, this.lastMessageId)
+		this.setLoading(true)
 		const response = await chatsAPI.getMessages(this.room?.id!, this.lastMessageId)
-		console.log('message response', response)
+		this.setLoading(false)
 		appState.setIsLoading(false)
 		if (!response.data) {
 			this.setCompleted(true)
 			return
 		}
-		this.pushFront(response.data)
+		this.pushBack(response.data)
+		if (callback) {
+			callback()
+		}
 		this.setLastMessageId(this.messages[this.messages.length - 1].id)
 		this.setCompleted(false)
 	}

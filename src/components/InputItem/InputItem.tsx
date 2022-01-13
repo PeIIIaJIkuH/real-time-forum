@@ -24,8 +24,8 @@ export const InputItem: FC<Props> = (
 	{
 		touched, error, value, name, label, handleChange,
 		type, handleSubmit, withLine = true, placeholder, mode = 'text',
-		padding = true
-	}
+		padding = true,
+	},
 ) => {
 	const ref = useRef<HTMLIonInputElement>(null)
 

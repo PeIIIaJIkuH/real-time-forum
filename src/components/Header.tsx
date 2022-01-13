@@ -24,5 +24,5 @@ export const Header: FC<Props> = observer(({title, backButton, showMenu = true})
 				</IonToolbar>
 			</IonHeader>
 		)
-	}
+	},
 )

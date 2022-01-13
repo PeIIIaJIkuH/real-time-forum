@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Chat: FC<Props> = observer(({segment}) => {
-	useEffect(() => {
+	const loadData = () => {
 		if (segment === 'all') {
 			chatsState.fetchUsers('all').then()
 		} else if (segment === 'online') {
@@ -17,12 +17,18 @@ export const Chat: FC<Props> = observer(({segment}) => {
 		} else {
 			chatsState.fetchChatRooms().then()
 		}
-	}, [segment])
+	}
+
+	useEffect(() => {
+		loadData()
+	}, [segment, chatsState.room])
 
 	return <>
 		{segment === 'private' ? (
 			chatsState.chatRooms.map(room => (
-				<ChatItem user={room.user} key={room.user.id} lastMessageDate={room.lastMessageDate} unreadMsgNumber={room.unreadMsgNumber}/>
+				<ChatItem user={room.user} key={room.user.id} lastMessage={room.lastMessage}
+				          unreadMsgNumber={room.unreadMsgNumber}
+				/>
 			))
 		) : (
 			chatsState.chatUsers.map(user => (

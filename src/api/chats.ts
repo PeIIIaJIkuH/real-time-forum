@@ -7,13 +7,22 @@ const getOnlineUsers = (): Promise<ApiResponse> => defaultAxios.get('chats/users
 
 const getPrivateChats = (): Promise<ApiResponse> => defaultAxios.get('chats')
 
-const getRoom = (id: number): Promise<ApiResponse> => defaultAxios.post('room', {
-	userID: id
+const getRoom = (userId: number): Promise<ApiResponse> => defaultAxios.post('room', {
+	userID: userId,
 })
 
-const getMessages = (id: number, lastMessageId: number): Promise<ApiResponse> => defaultAxios.post('messages', {
-	roomID: id,
-	lastMessageID: lastMessageId
+const getMessages = (roomId: number, lastMessageId: number): Promise<ApiResponse> => defaultAxios.post('messages', {
+	roomID: roomId,
+	lastMessageID: lastMessageId,
+})
+
+const readMessages = (roomId: number): Promise<ApiResponse> => defaultAxios.put('room/messages', {
+	roomID: roomId,
+})
+
+const readMessage = (roomId: number, messageId: number) => defaultAxios.put('room/message', {
+	roomID: roomId,
+	messageID: messageId,
 })
 
 export const chatsAPI = {
@@ -21,5 +30,7 @@ export const chatsAPI = {
 	getOnlineUsers,
 	getPrivateChats,
 	getRoom,
-	getMessages
+	getMessages,
+	readMessages,
+	readMessage,
 }

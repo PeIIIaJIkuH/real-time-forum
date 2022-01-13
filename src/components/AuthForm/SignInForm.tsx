@@ -19,7 +19,7 @@ export const SignInForm: FC<Props> = ({toggle, closeModal}) => {
 
 	const initialValues: LoginValues = {
 		usernameOrEmail: null,
-		password: null
+		password: null,
 	}
 
 	const onSubmit = async (values: FormikValues) => {

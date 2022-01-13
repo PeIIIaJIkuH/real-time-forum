@@ -9,7 +9,6 @@ import {toastDuration} from '../../utils/constants'
 import {registerValidationSchema} from '../../utils/validationSchemas'
 import {ErrorItem} from '../ErrorItem/ErrorItem'
 import {InputItem} from '../InputItem/InputItem'
-import s from './AuthForm.module.css'
 
 interface Props {
 	toggle: () => void
@@ -26,7 +25,7 @@ export const SignUpForm: FC<Props> = ({toggle}) => {
 		firstName: null,
 		lastName: null,
 		age: null,
-		gender: null
+		gender: null,
 	}
 
 	const onSubmit = async (values: FormikValues) => {
@@ -67,7 +66,7 @@ export const SignUpForm: FC<Props> = ({toggle}) => {
 						<InputItem touched={touched.age} error={errors.age} value={values.age} type='number' name='age'
 						           label='Age' handleChange={handleChange} handleSubmit={handleSubmit} mode='numeric'
 						/>
-						<IonItem className={clsx(touched.gender && errors.gender ? s.incorrect : s.correct)}>
+						<IonItem className={clsx(touched.gender)}>
 							<IonLabel position='floating'>Gender</IonLabel>
 							<IonSelect name='gender' value={values.gender} interface='action-sheet' onIonChange={handleChange}>
 								<IonSelectOption value='male'>Male</IonSelectOption>

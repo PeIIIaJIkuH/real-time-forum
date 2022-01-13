@@ -1,4 +1,14 @@
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonToast} from '@ionic/react'
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonPage,
+	IonTitle,
+	IonToolbar,
+	useIonToast,
+} from '@ionic/react'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {arrowBackOutline} from 'ionicons/icons'
 import {FC} from 'react'
@@ -19,7 +29,7 @@ export const CreateComment: FC<Props> = ({closeModal, postId}) => {
 	const toast = useIonToast()[0]
 
 	const initialValues: CommentValues = {
-		comment: null
+		comment: null,
 	}
 
 	const onSubmit = async ({comment}: FormikValues) => {
@@ -52,7 +62,8 @@ export const CreateComment: FC<Props> = ({closeModal, postId}) => {
 					{({values, handleSubmit, handleChange, errors, touched}: FormikProps<CommentValues>) => (
 						<Form onSubmit={handleSubmit}>
 							<TextareaItem touched={touched.comment} error={errors.comment} value={values.comment} name='comment' label='Comment'
-										  handleChange={handleChange} handleSubmit={handleSubmit}/>
+							              handleChange={handleChange} handleSubmit={handleSubmit}
+							/>
 							<IonButton type='submit' expand='full' className='ion-margin'>Create</IonButton>
 						</Form>
 					)}

@@ -11,14 +11,13 @@ import {
 	IonSelectOption,
 	IonTitle,
 	IonToolbar,
-	useIonToast
+	useIonToast,
 } from '@ionic/react'
 import clsx from 'clsx'
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {arrowBackOutline} from 'ionicons/icons'
 import {FC} from 'react'
 import {postsAPI} from '../api/posts'
-import s from '../components/AuthForm/AuthForm.module.css'
 import {ErrorItem} from '../components/ErrorItem/ErrorItem'
 import {InputItem} from '../components/InputItem/InputItem'
 import {TextareaItem} from '../components/TextareaItem/TextareaItem'
@@ -37,7 +36,7 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 	const initialValues: PostValues = {
 		title: null,
 		content: null,
-		categories: null
+		categories: null,
 	}
 
 	const onSubmit = async (values: FormikValues) => {
@@ -68,10 +67,12 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 					{({values, handleSubmit, handleChange, errors, touched}: FormikProps<PostValues>) => (
 						<Form onSubmit={handleSubmit}>
 							<InputItem touched={touched.title} error={errors.title} value={values.title} type='text'
-									   name='title' label='Title' handleChange={handleChange} handleSubmit={handleSubmit}/>
+							           name='title' label='Title' handleChange={handleChange} handleSubmit={handleSubmit}
+							/>
 							<TextareaItem touched={touched.content} error={errors.content} value={values.content} name='content' label='Content'
-										  handleChange={handleChange} handleSubmit={handleSubmit}/>
-							<IonItem className={clsx(touched.categories && errors.categories ? s.incorrect : s.correct)}>
+							              handleChange={handleChange} handleSubmit={handleSubmit}
+							/>
+							<IonItem className={clsx(touched.categories)}>
 								<IonLabel position='floating'>Categories</IonLabel>
 								<IonSelect name='categories' value={values.categories} interface='alert' onIonChange={handleChange}>
 									<IonSelectOption value='text'>text</IonSelectOption>
