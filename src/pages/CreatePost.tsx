@@ -21,7 +21,7 @@ import {postsAPI} from '../api/posts'
 import {ErrorItem} from '../components/ErrorItem/ErrorItem'
 import {InputItem} from '../components/InputItem/InputItem'
 import {TextareaItem} from '../components/TextareaItem/TextareaItem'
-import postsStore from '../store/postsState'
+import postsState from '../store/postsState'
 import {PostValues} from '../types'
 import {toastDuration} from '../utils/constants'
 import {postValidationSchema} from '../utils/validationSchemas'
@@ -42,7 +42,7 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 	const onSubmit = async (values: FormikValues) => {
 		const response = await postsAPI.createPost(values as PostValues)
 		if (response.state) {
-			await postsStore.fetchCreatedPosts(1)
+			await postsState.fetchCreatedPosts(1)
 			closeModal()
 			toast({message: response.message, duration: toastDuration, color: 'success'})
 		} else {

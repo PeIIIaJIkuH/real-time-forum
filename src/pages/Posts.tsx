@@ -19,14 +19,13 @@ import {Header} from '../components/Header'
 import {Post} from '../components/Post/Post'
 import authState from '../store/authState'
 import postsState from '../store/postsState'
-import postsStore from '../store/postsState'
 import {CreatePost} from './CreatePost'
 
 export const Posts: FC = observer(() => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	useEffect(() => {
-		postsStore.fetchPosts().then()
+		postsState.fetchPosts().then()
 	}, [])
 
 	const openModal = () => {
@@ -63,7 +62,7 @@ export const Posts: FC = observer(() => {
 					<CreatePost closeModal={closeModal}/>
 				</IonModal>
 				<IonGrid fixed>
-					{postsStore.posts?.map(post => (
+					{postsState.posts?.map(post => (
 						<Post post={post} key={post.id} clickable/>
 					))}
 					<IonInfiniteScroll threshold='50px' onIonInfinite={onInfinite} disabled={postsState.completed}>

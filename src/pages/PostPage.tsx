@@ -18,7 +18,7 @@ import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
 import {Post} from '../components/Post/Post'
 import authState from '../store/authState'
-import postStore from '../store/postState'
+import postsState from '../store/postState'
 import {CreateComment} from './CreateComments'
 import {NotFound} from './errors/NotFound'
 
@@ -35,17 +35,17 @@ export const PostPage: FC = observer(() => {
 	}
 
 	useEffect(() => {
-		postStore.fetchData(id).then()
+		postsState.fetchData(id).then()
 	}, [id])
 
 	useEffect(() => {
 		return () => {
-			postStore.setPost(null)
-			postStore.setComments([])
+			postsState.setPost(null)
+			postsState.setComments([])
 		}
 	}, [])
 
-	if (postStore.postError) {
+	if (postsState.postError) {
 		return <NotFound/>
 	}
 
@@ -59,12 +59,12 @@ export const PostPage: FC = observer(() => {
 					</IonFabButton>
 				</IonFab>
 				<IonGrid fixed>
-					<Post post={postStore.post!}/>
+					<Post post={postsState.post!}/>
 					<IonList>
 						<IonListHeader>
-							<h3>{postStore.comments ? 'Comments' : 'No Comments'}</h3>
+							<h3>{postsState.comments ? 'Comments' : 'No Comments'}</h3>
 						</IonListHeader>
-						{postStore.comments?.map(comment => (
+						{postsState.comments?.map(comment => (
 							<Comment comment={comment} key={comment.id}/>
 						))}
 					</IonList>

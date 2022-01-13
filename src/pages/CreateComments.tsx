@@ -15,7 +15,7 @@ import {FC} from 'react'
 import {postsAPI} from '../api/posts'
 import {TextareaItem} from '../components/TextareaItem/TextareaItem'
 import appState from '../store/appState'
-import postStore from '../store/postState'
+import postsState from '../store/postState'
 import {CommentValues} from '../types'
 import {toastDuration} from '../utils/constants'
 import {commentValidationSchema} from '../utils/validationSchemas'
@@ -36,7 +36,7 @@ export const CreateComment: FC<Props> = ({closeModal, postId}) => {
 		const response = await postsAPI.createComment(comment, postId)
 		if (response.state) {
 			appState.setIsLoading(true)
-			await postStore.fetchComments(String(postId))
+			await postsState.fetchComments(String(postId))
 			appState.setIsLoading(false)
 			closeModal()
 			toast({message: response.message, duration: toastDuration, color: 'success'})
