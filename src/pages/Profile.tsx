@@ -10,12 +10,13 @@ import {
 	IonRow,
 } from '@ionic/react'
 import {observer} from 'mobx-react-lite'
-import moment from 'moment'
 import {FC, useEffect} from 'react'
 import {useHistory} from 'react-router'
 import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
 import authState from '../store/authState'
+import {getTime} from '../utils/helpers'
+import {DateTime} from 'luxon'
 
 export const Profile: FC = observer(() => {
 	const history = useHistory()
@@ -47,9 +48,10 @@ export const Profile: FC = observer(() => {
 									<IonCardContent>
 										<div><strong>Email:</strong>: {authState.user?.email}</div>
 										<div><strong>Created
-											at</strong>: {moment(authState.user?.createdAt * 1000).calendar()}</div>
+											at</strong>: {DateTime.fromMillis(authState.user?.createdAt * 1000).toFormat('dd.MM.yyyy HH:mm')}
+										</div>
 										<div><strong>Last active
-											at</strong>: {moment(authState.user?.lastActive * 1000).fromNow()}</div>
+											at</strong>: {getTime(authState.user?.lastActive, true)}</div>
 										<div><strong>Age</strong>: {authState.user?.age}</div>
 										<div><strong>Gender</strong>: {authState.user?.gender}</div>
 									</IonCardContent>

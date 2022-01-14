@@ -14,12 +14,13 @@ import {
 import {addOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
-import {Content} from '../components/Content/Content'
-import {Header} from '../components/Header'
-import {Post} from '../components/Post/Post'
-import authState from '../store/authState'
-import postsState from '../store/postsState'
-import {CreatePost} from './CreatePost'
+import {Content} from '../../components/Content/Content'
+import {Header} from '../../components/Header'
+import {Post} from '../../components/Post/Post'
+import authState from '../../store/authState'
+import postsState from '../../store/postsState'
+import {CreatePost} from '../CreatePost'
+import s from './Posts.module.css'
 
 export const Posts: FC = observer(() => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -65,6 +66,12 @@ export const Posts: FC = observer(() => {
 					{postsState.posts?.map(post => (
 						<Post post={post} key={post.id} clickable/>
 					))}
+					{postsState.posts.length === 0 && (
+						<div className={s.noPosts}>
+							<div>No posts</div>
+							<div>Be first to write something</div>
+						</div>
+					)}
 					<IonInfiniteScroll threshold='50px' onIonInfinite={onInfinite} disabled={postsState.completed}>
 						<IonInfiniteScrollContent/>
 					</IonInfiniteScroll>

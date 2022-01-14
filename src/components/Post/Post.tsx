@@ -11,11 +11,11 @@ import {
 } from '@ionic/react'
 import {chatboxOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
-import moment from 'moment'
 import {FC} from 'react'
 import {useHistory} from 'react-router'
 import {IPost} from '../../types'
 import s from './Post.module.css'
+import {getTime} from '../../utils/helpers'
 
 interface Props {
 	post: IPost
@@ -42,7 +42,7 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 							<IonCardSubtitle>
 								<div className={s.subtitle}>
 									<div>{post.author.username}</div>
-									<div>{moment(post.createdAt * 1000).fromNow()}</div>
+									<div>{getTime(post.createdAt, true)}</div>
 								</div>
 							</IonCardSubtitle>
 						</IonCardHeader>

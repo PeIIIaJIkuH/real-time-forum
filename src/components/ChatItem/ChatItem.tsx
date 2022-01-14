@@ -1,14 +1,13 @@
 import {IonAvatar, IonIcon, IonItem, IonLabel, IonText} from '@ionic/react'
-import moment from 'moment'
 import {FC} from 'react'
 import {chatsAPI} from '../../api/chats'
 import chatsState from '../../store/chatsState'
 import {IChatUser, IMessage} from '../../types'
 import s from './ChatItem.module.css'
-import {lastMessageDateFormat} from '../../utils/constants'
 import {checkmarkDoneOutline} from 'ionicons/icons'
 import authState from '../../store/authState'
 import {observer} from 'mobx-react-lite'
+import {getTime} from '../../utils/helpers'
 
 interface Props {
 	user: IChatUser
@@ -45,7 +44,8 @@ export const ChatItem: FC<Props> = observer(({user, lastMessage, unreadMsgNumber
 			<div className={s.col}>
 				{lastMessage ? (
 					<IonText color='medium' className={s.lastMessageDate}>
-						{moment(lastMessage.messageDate * 1000).calendar(null, lastMessageDateFormat)}
+						{getTime(lastMessage.messageDate)}
+						{/*{moment(lastMessage.messageDate * 1000).calendar(null, lastMessageDateFormat)}*/}
 					</IonText>
 				) : null}
 				<div className={s.info}>

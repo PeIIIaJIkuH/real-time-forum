@@ -22,7 +22,7 @@ import {Redirect, Route, Switch} from 'react-router'
 import {SideMenu} from './components/SideMenu'
 import {ChatsPage} from './pages/ChatsPage/ChatsPage'
 import {PostPage} from './pages/PostPage'
-import {Posts} from './pages/Posts'
+import {Posts} from './pages/Posts/Posts'
 import {Profile} from './pages/Profile'
 import authState from './store/authState'
 
