@@ -17,7 +17,6 @@ export const Messages: FC = observer(() => {
 	const observer = useRef<IntersectionObserver>()
 	const endRef = useRef<HTMLDivElement>(null)
 	const scrollToBottom = () => {
-		console.log(wasOnce)
 		if (!wasOnce) {
 			setTimeout(() => {
 				endRef.current?.scrollIntoView({behavior: 'smooth'})
@@ -73,3 +72,6 @@ export const Messages: FC = observer(() => {
 		</IonPage>
 	)
 })
+
+// todo:
+// remove scroll jump on load

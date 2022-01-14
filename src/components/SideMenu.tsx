@@ -6,7 +6,6 @@ import {
 	IonFooter,
 	IonHeader,
 	IonIcon,
-	IonLabel,
 	IonMenu,
 	IonModal,
 	IonRow,
@@ -35,8 +34,8 @@ export const SideMenu: FC = observer(() => {
 		await menuRef.current!.close()
 	}
 
-	const openModal = () => {
-		closeMenu()
+	const openModal = async () => {
+		await closeMenu()
 		setIsOpen(true)
 	}
 
@@ -57,18 +56,13 @@ export const SideMenu: FC = observer(() => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent>
-				{authState.user ? <>
-					<IonRow>
-						<IonCol>
-							<IonLabel>{authState.user.username}</IonLabel>
-						</IonCol>
-					</IonRow>
+				{authState.user ? (
 					<IonRow>
 						<IonCol>
 							<IonButton expand='block' color='danger' onClick={logOut}>Log out</IonButton>
 						</IonCol>
 					</IonRow>
-				</> : (
+				) : (
 					<IonRow>
 						<IonCol>
 							<IonButton expand='block' onClick={openModal}>Log In</IonButton>

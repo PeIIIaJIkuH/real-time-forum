@@ -42,7 +42,7 @@ export const InputItem: FC<Props> = (
 				</IonLabel>
 			)}
 			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}
-			          placeholder={placeholder} inputmode={mode} spellcheck={true} className={s.input}
+			          placeholder={placeholder} inputmode={mode} spellcheck={true} className={s.input} clearOnEdit={true}
 			/>
 		</IonItem>
 		{touched && error && (

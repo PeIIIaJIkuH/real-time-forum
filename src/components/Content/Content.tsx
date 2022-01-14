@@ -7,7 +7,7 @@ import s from './Content.module.css'
 
 export const Content: FC = observer(({children}) => {
 	return (
-		<IonContent fullscreen={true}>
+		<IonContent>
 			<IonProgressBar type='indeterminate' className={clsx(s.progressBar, appState.isLoading && s.show)}/>
 			{children}
 		</IonContent>

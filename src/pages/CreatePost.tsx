@@ -94,3 +94,6 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 		</IonPage>
 	)
 }
+
+// todo:
+// make categories dynamic
