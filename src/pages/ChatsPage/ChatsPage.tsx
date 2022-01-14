@@ -49,6 +49,23 @@ export const ChatsPage: FC = observer(() => {
 					<IonList>
 						<Chat segment={segment}/>
 					</IonList>
+					{segment === 'private' && chatsState.chatRooms.length === 0 && (
+						<div className={s.noItems}>
+							<div>There are no chats</div>
+							<div>Be first to write to someone</div>
+						</div>
+					)}
+					{segment === 'all' && chatsState.chatUsers.length === 0 && (
+						<div className={s.noItems}>
+							<div>There are no users</div>
+							<div>Invite your friends</div>
+						</div>
+					)}
+					{segment === 'online' && chatsState.chatUsers.length === 0 && (
+						<div className={s.noItems}>
+							<div>There are no online users</div>
+						</div>
+					)}
 				</IonGrid>
 				<IonModal isOpen={!!chatsState.room}>
 					<Messages/>
