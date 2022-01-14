@@ -7,7 +7,6 @@ import {MessageInputForm} from '../../components/MessageInputForm/MessageInputFo
 import chatsState from '../../store/chatsState'
 import {Content} from '../../components/Content/Content'
 import {MessageItem} from '../../components/MessageItem/MessageItem'
-import {toJS} from 'mobx'
 
 import s from './Messages.module.css'
 import {chatsAPI} from '../../api/chats'
@@ -16,6 +15,7 @@ export const Messages: FC = observer(() => {
 	const [wasOnce, setWasOnce] = useState(false)
 	const observer = useRef<IntersectionObserver>()
 	const endRef = useRef<HTMLDivElement>(null)
+	const ref = useRef<HTMLDivElement>(null)
 	const scrollToBottom = () => {
 		if (!wasOnce) {
 			setTimeout(() => {
@@ -45,6 +45,9 @@ export const Messages: FC = observer(() => {
 
 	useEffect(() => {
 		chatsAPI.readMessages(chatsState.room?.id!).then()
+		ref?.current?.addEventListener('scroll', e => {
+			console.log(e)
+		})
 		return () => {
 			chatsState.setMessages([])
 			chatsState.setLastMessageId(0)
@@ -56,12 +59,12 @@ export const Messages: FC = observer(() => {
 		<IonPage>
 			<Header title={chatsState.room?.user.username!} backButton={backButton}/>
 			<Content>
-				<div className={s.messages}>
-					<div ref={detectorRef}/>
-					{toJS(chatsState.messages).reverse().map(message => (
+				<div className={s.messages} ref={ref}>
+					<div ref={endRef}/>
+					{chatsState.messages.map(message => (
 						<MessageItem message={message} key={message.id}/>
 					))}
-					<div ref={endRef}/>
+					<div ref={detectorRef}/>
 				</div>
 			</Content>
 			<IonFooter>
@@ -72,6 +75,3 @@ export const Messages: FC = observer(() => {
 		</IonPage>
 	)
 })
-
-// todo:
-// remove scroll jump on load

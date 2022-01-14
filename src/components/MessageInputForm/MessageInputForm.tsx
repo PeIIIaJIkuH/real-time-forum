@@ -28,7 +28,6 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 			return
 		}
 		appState.setIsLoading(true)
-		appState.setIsLoading(false)
 		socket.current?.send(JSON.stringify({
 			content: values.content,
 			eventType: 'Message',
@@ -50,6 +49,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 			const eventType: WsEventType = data.eventType
 			switch (eventType) {
 				case 'Message':
+					appState.setIsLoading(false)
 					const isYourMessage = data.message.user.id === authState.user?.id
 					const message = {
 						...data.message,
