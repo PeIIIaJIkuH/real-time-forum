@@ -10,6 +10,11 @@
     --padding-end: 0;
 }
 
-.input {
+.item {
+    display: flex;
+    align-items: center;
+}
 
+.popover {
+    padding: 20px;    
 }

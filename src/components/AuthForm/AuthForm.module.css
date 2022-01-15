@@ -1,0 +1,12 @@
+.gender {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    z-index: 10;
+}
+
+.popover {
+    padding: 20px;
+}

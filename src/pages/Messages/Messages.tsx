@@ -11,9 +11,10 @@ import {chatsAPI} from '../../api/chats'
 import s from './Messages.module.css'
 
 export const Messages: FC = observer(() => {
-	const [wasOnce, setWasOnce] = useState(false)
-	const observer = useRef<IntersectionObserver>()
-	const endRef = useRef<HTMLDivElement>(null)
+	const [wasOnce, setWasOnce] = useState(false),
+		observer = useRef<IntersectionObserver>(),
+		endRef = useRef<HTMLDivElement>(null)
+	
 	const scrollToBottom = () => {
 		if (!wasOnce) {
 			setTimeout(() => {

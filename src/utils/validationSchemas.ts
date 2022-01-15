@@ -67,14 +67,12 @@ export const postValidationSchema = yup.object({
 	title: yup
 		.string()
 		.nullable()
-		.trim('Can not start or end with whitespaces')
-		.strict(true)
+		.trim('No whitespaces are allowed at start or end of the string')
 		.required('Required'),
 	content: yup
 		.string()
 		.nullable()
-		.trim('Can not start or end with whitespaces')
-		.strict(true)
+		.trim('No whitespaces are allowed at start or end of the string')
 		.required('Required'),
 })
 
@@ -82,7 +80,6 @@ export const commentValidationSchema = yup.object({
 	comment: yup
 		.string()
 		.nullable()
-		.trim('Can not start or end with whitespaces')
-		.strict(true)
+		.trim('No whitespaces are allowed at start or end of the string')
 		.required('Required'),
 })

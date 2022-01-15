@@ -2,3 +2,12 @@
     --highlight-background: var(--ion-color-danger);
     --border-color: var(--ion-color-danger);
 }
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.popover {
+    padding: 20px;
+}
