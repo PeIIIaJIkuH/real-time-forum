@@ -12,7 +12,7 @@ export const getCSRFToken = (): string | null => {
 export const getTime = (seconds: number, withTime = false): string => {
 	const date = DateTime.fromMillis(seconds * 1000).setLocale('en')
 	const now = DateTime.now().setLocale('en')
-	const isSameDay = now.diff(date, 'days').days < 1
+	const isSameDay = now.year === date.year && now.month === date.month && now.day === date.day
 	const isSameWeek = now.diff(date, 'weeks').weeks < 1
 	if (isSameDay) {
 		return date.toFormat('HH:mm')
@@ -21,6 +21,3 @@ export const getTime = (seconds: number, withTime = false): string => {
 	}
 	return date.toFormat(withTime ? 'DD' : 'dd:mm:yy HH:mm')
 }
-
-// todo
-// fix bug with time
