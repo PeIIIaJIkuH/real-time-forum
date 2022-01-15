@@ -11,6 +11,7 @@ class ChatsState {
 	completed: boolean = false
 	lastMessageId: number = 0
 	loading: boolean = false
+	disabled: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -51,17 +52,16 @@ class ChatsState {
 	setLoading(loading: boolean) {
 		this.loading = loading
 	}
+	
+	setDisabled(disabled: boolean) {
+		this.disabled = disabled
+	}
 
-	async fetchUsers(type: 'all' | 'online') {
+	async fetchUsers() {
 		this.setChatsUsers([])
 		this.setChatRooms([])
 		appState.setIsLoading(true)
-		let response
-		if (type === 'all') {
-			response = await chatsAPI.getAllUsers()
-		} else {
-			response = await chatsAPI.getOnlineUsers()
-		}
+		const response = await chatsAPI.getAllUsers()
 		appState.setIsLoading(false)
 		if (response.state && response.data) {
 			this.setChatsUsers(response.data)
@@ -80,7 +80,9 @@ class ChatsState {
 	}
 
 	async fetchMessages(callback?: () => void) {
-		if (this.loading) return
+		if (this.loading) {
+			return
+		}
 		appState.setIsLoading(true)
 		this.setLoading(true)
 		const response = await chatsAPI.getMessages(this.room?.id!, this.lastMessageId)

@@ -93,7 +93,7 @@ export interface CommentValues {
 	comment: string | null
 }
 
-export type TSegment = 'all' | 'online' | 'private'
+export type TSegment = 'users' | 'chats'
 
 export interface MessageValues {
 	content: string | null

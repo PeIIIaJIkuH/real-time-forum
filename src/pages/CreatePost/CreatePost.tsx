@@ -17,14 +17,15 @@ import {
 import {Form, Formik, FormikProps, FormikValues} from 'formik'
 import {arrowBackOutline} from 'ionicons/icons'
 import {FC, useEffect, useState} from 'react'
-import {postsAPI} from '../api/posts'
-import {InputItem} from '../components/InputItem/InputItem'
-import {TextareaItem} from '../components/TextareaItem/TextareaItem'
-import postsState from '../store/postsState'
-import {ICategory, PostValues} from '../types'
-import {toastDuration} from '../utils/constants'
-import {postValidationSchema} from '../utils/validationSchemas'
-import {SelectCategories} from './SelectCategories'
+import {postsAPI} from '../../api/posts'
+import {InputItem} from '../../components/InputItem/InputItem'
+import {TextareaItem} from '../../components/TextareaItem/TextareaItem'
+import postsState from '../../store/postsState'
+import {ICategory, PostValues} from '../../types'
+import {toastDuration} from '../../utils/constants'
+import {postValidationSchema} from '../../utils/validationSchemas'
+import {SelectCategories} from '../SelectCategories'
+import s from './CreatePost.module.css'
 
 interface Props {
 	closeModal: () => void
@@ -115,7 +116,7 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 							/>
 							<IonItem button={true} onClick={onClick} lines='full'>
 								<IonLabel>Categories</IonLabel>
-								<IonCol className='ion-justify-content-end'>
+								<IonCol className={s.categories}>
 									{filteredSelected.map(name => (
 										<IonChip outline={true} color='medium' key={name}>
 											<IonLabel>{name}</IonLabel>

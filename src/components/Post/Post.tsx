@@ -32,7 +32,7 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 		}
 	}
 
-	return <>
+	return (
 		<IonRow>
 			<IonCol>
 				<IonCard onClick={onClick}>
@@ -70,5 +70,5 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 				</IonCard>
 			</IonCol>
 		</IonRow>
-	</>
+	)
 })

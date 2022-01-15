@@ -7,11 +7,12 @@ import {getTime} from '../../utils/helpers'
 
 interface Props {
 	message: IMessage
+	innerRef?: any
 }
 
-export const MessageItem: FC<Props> = ({message}) => {
+export const MessageItem: FC<Props> = ({message, innerRef}) => {
 	return (
-		<IonRow className={s.wrapper}>
+		<IonRow className={s.wrapper} ref={innerRef}>
 			<IonCol className={clsx(s.inner, message.isYourMessage && s.myMessage)} size='auto'>
 				<div>{message.content}</div>
 				<div className={s.date}>{getTime(message.messageDate, true)}</div>

@@ -14,7 +14,7 @@ import s from './ChatsPage.module.css'
 
 export const ChatsPage: FC = observer(() => {
 	const history = useHistory(),
-		[segment, setSegment] = useState<TSegment>('all')
+		[segment, setSegment] = useState<TSegment>('users')
 
 	if (!authState.user && authState.connected) {
 		setTimeout(() => history.push('/posts'))
@@ -36,34 +36,26 @@ export const ChatsPage: FC = observer(() => {
 			<Content>
 				<IonGrid fixed className='ion-no-padding'>
 					<IonSegment onIonChange={onSegmentChange} value={segment} className={s.segment}>
-						<IonSegmentButton value='all'>
-							<IonLabel>All</IonLabel>
+						<IonSegmentButton value='users'>
+							<IonLabel>Users</IonLabel>
 						</IonSegmentButton>
-						<IonSegmentButton value='online'>
-							<IonLabel>Online</IonLabel>
-						</IonSegmentButton>
-						<IonSegmentButton value='private'>
+						<IonSegmentButton value='chats'>
 							<IonLabel>Chats</IonLabel>
 						</IonSegmentButton>
 					</IonSegment>
 					<IonList>
 						<Chat segment={segment}/>
 					</IonList>
-					{segment === 'private' && chatsState.chatRooms.length === 0 && (
+					{segment === 'chats' && chatsState.chatRooms.length === 0 && (
 						<div className={s.noItems}>
 							<div>There are no chats</div>
 							<div>Be first to write to someone</div>
 						</div>
 					)}
-					{segment === 'all' && chatsState.chatUsers.length === 0 && (
+					{segment === 'users' && chatsState.chatUsers.length === 0 && (
 						<div className={s.noItems}>
 							<div>There are no users</div>
 							<div>Invite your friends</div>
-						</div>
-					)}
-					{segment === 'online' && chatsState.chatUsers.length === 0 && (
-						<div className={s.noItems}>
-							<div>There are no online users</div>
 						</div>
 					)}
 				</IonGrid>

@@ -32,3 +32,6 @@ export const TextareaItem: FC<Props> = ({
 		)}
 	</>
 }
+
+// todo:
+// change error style, little icon on the right side, popover with information

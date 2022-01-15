@@ -19,7 +19,7 @@ import {Header} from '../../components/Header'
 import {Post} from '../../components/Post/Post'
 import authState from '../../store/authState'
 import postsState from '../../store/postsState'
-import {CreatePost} from '../CreatePost'
+import {CreatePost} from '../CreatePost/CreatePost'
 import s from './Posts.module.css'
 
 export const Posts: FC = observer(() => {

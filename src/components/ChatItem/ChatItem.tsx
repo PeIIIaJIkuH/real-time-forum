@@ -4,7 +4,7 @@ import {chatsAPI} from '../../api/chats'
 import chatsState from '../../store/chatsState'
 import {IChatUser, IMessage} from '../../types'
 import s from './ChatItem.module.css'
-import {checkmarkDoneOutline} from 'ionicons/icons'
+import {checkmarkDoneOutline, ellipse} from 'ionicons/icons'
 import authState from '../../store/authState'
 import {observer} from 'mobx-react-lite'
 import {getTime} from '../../utils/helpers'
@@ -27,7 +27,7 @@ export const ChatItem: FC<Props> = observer(({user, lastMessage, unreadMsgNumber
 	}
 
 	return (
-		<IonItem key={user.id} onClick={onClick}>
+		<IonItem key={user.id} onClick={onClick} disabled={chatsState.disabled}>
 			<IonAvatar>
 				<img src='https://ionicframework.com/docs/demos/api/avatar/avatar.svg' alt='avatar'/>
 			</IonAvatar>
@@ -35,19 +35,23 @@ export const ChatItem: FC<Props> = observer(({user, lastMessage, unreadMsgNumber
 				<div className={s.wrapper}>
 					<IonText className={s.username}>{user.username}</IonText>
 				</div>
-				<div className={s.wrapper}>
-					<IonText color='medium' className={s.lastMessageOrStatus}>
-						{lastMessage ? lastMessage.content : user.status}
-					</IonText>
-				</div>
+				{lastMessage && (
+					<div className={s.wrapper}>
+						<IonText color='medium' className={s.lastMessageOrStatus}>
+							{lastMessage.content}
+						</IonText>
+					</div>
+				)}
 			</IonLabel>
 			<div className={s.col}>
-				{lastMessage ? (
+				{lastMessage && (
 					<IonText color='medium' className={s.lastMessageDate}>
 						{getTime(lastMessage.messageDate)}
-						{/*{moment(lastMessage.messageDate * 1000).calendar(null, lastMessageDateFormat)}*/}
 					</IonText>
-				) : null}
+				)}
+				{user.status === 'online' && !lastMessage && (
+					<IonIcon icon={ellipse} slot='end' color='primary'/>
+				)}
 				<div className={s.info}>
 					{lastMessage?.user.id === authState.user?.id && lastMessage?.read ? (
 						<IonIcon icon={checkmarkDoneOutline} color='primary'/>
