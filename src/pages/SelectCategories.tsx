@@ -10,10 +10,9 @@ import {
 	IonItem,
 	IonList,
 	IonText,
-	IonTitle,
 	IonToolbar,
 } from '@ionic/react'
-import {addOutline, arrowBackOutline, checkmarkOutline, searchOutline} from 'ionicons/icons'
+import {addOutline, arrowBackOutline, checkmarkOutline} from 'ionicons/icons'
 import {ICategory} from '../types'
 
 interface Props {
@@ -102,22 +101,18 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 							<IonIcon icon={arrowBackOutline} slot='icon-only'/>
 						</IonButton>
 					</IonButtons>
-					<IonTitle>Select Categories</IonTitle>
-				</IonToolbar>
-			</IonHeader>
-			<IonContent>
-				<IonItem>
 					<IonInput placeholder='Search' value={text} onIonChange={onChange} maxlength={20} onKeyDown={onKeyDown}/>
-					<IonIcon icon={searchOutline} slot='start'/>
 					{text.trim() && !categories.some(category => category.name === text.trim()) && !newSelected[text.trim()] && (
 						<IonButton slot='end' fill='clear' color='medium' onClick={addCategory}>
 							<IonIcon slot='icon-only' icon={addOutline}/>
 						</IonButton>
 					)}
-				</IonItem>
+				</IonToolbar>
+			</IonHeader>
+			<IonContent>
 				<IonList>
 					{filteredNewSelected.map(name => (
-						<IonItem key={name} onClick={() => onClick(name)} button={true}>
+						<IonItem key={name} onClick={() => onClick(name)} button={true} lines='full'>
 							<IonText>{name}</IonText>
 							{newSelected[name] && (
 								<IonIcon icon={checkmarkOutline} slot='end' size='small'/>
@@ -125,7 +120,7 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 						</IonItem>
 					))}
 					{filteredCategories.map(category => (
-						<IonItem key={category.id} onClick={() => onClick(category.name)} button={true}>
+						<IonItem key={category.id} onClick={() => onClick(category.name)} button={true} lines='full'>
 							<IonText>{category.name}</IonText>
 							{newSelected[category.name] && (
 								<IonIcon icon={checkmarkOutline} slot='end' size='small'/>
