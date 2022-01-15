@@ -110,13 +110,11 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 							<InputItem touched={touched.title} error={errors.title} value={values.title} type='text'
 							           name='title' label='Title' handleChange={handleChange} handleSubmit={handleSubmit}
 							/>
-							<TextareaItem touched={touched.content} error={errors.content} value={values.content} name='content' label='Content'
-							              handleChange={handleChange} handleSubmit={handleSubmit}
+							<TextareaItem touched={touched.content} error={errors.content} value={values.content}
+							              name='content' label='Content' handleChange={handleChange} handleSubmit={handleSubmit}
 							/>
-							<IonItem button={true} onClick={onClick}>
-								<IonCol>
-									<IonLabel>Categories</IonLabel>
-								</IonCol>
+							<IonItem button={true} onClick={onClick} lines='full'>
+								<IonLabel>Categories</IonLabel>
 								<IonCol className='ion-justify-content-end'>
 									{filteredSelected.map(name => (
 										<IonChip outline={true} color='medium' key={name}>
