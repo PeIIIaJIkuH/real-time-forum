@@ -11,18 +11,26 @@
     justify-content: space-between;
 }
 
-.comments {
+.categories {
     display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon {
-    margin-right: 5px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .tag {
     border-radius: 5px;
     padding: 2px 8px;
     border: 1px solid #e6e6e6;
+}
+
+.comments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.icon {
+    margin-right: 5px;
 }

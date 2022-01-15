@@ -30,8 +30,9 @@ export const InputItem: FC<Props> = (
 	const ref = useRef<HTMLIonInputElement>(null)
 
 	const onKeyDown: KeyboardEventHandler = (e) => {
-		if (e.key === 'Enter')
+		if (e.key === 'Enter') {
 			handleSubmit()
+		}
 	}
 
 	return <>

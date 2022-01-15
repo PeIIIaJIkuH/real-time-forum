@@ -45,9 +45,6 @@ export const Messages: FC = observer(() => {
 
 	useEffect(() => {
 		chatsAPI.readMessages(chatsState.room?.id!).then()
-		ref?.current?.addEventListener('scroll', e => {
-			console.log(e)
-		})
 		return () => {
 			chatsState.setMessages([])
 			chatsState.setLastMessageId(0)
@@ -75,3 +72,6 @@ export const Messages: FC = observer(() => {
 		</IonPage>
 	)
 })
+
+// todo:
+// fix bug when there are no messages

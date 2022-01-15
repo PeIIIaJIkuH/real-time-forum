@@ -86,7 +86,7 @@ export interface ApiResponse {
 export interface PostValues {
 	title: string | null
 	content: string | null
-	categories: string | null
+	categories: string[] | null
 }
 
 export interface CommentValues {

@@ -6,7 +6,7 @@ const getCategories = (): Promise<ApiResponse> => defaultAxios.get('categories')
 const createPost = (values: PostValues): Promise<ApiResponse> => defaultAxios.post('post', {
 	title: values.title,
 	content: values.content,
-	categories: [values.categories],
+	categories: values.categories,
 })
 
 const getAllPosts = (lastPostId: number, limit: number): Promise<ApiResponse> => defaultAxios.post('posts', {

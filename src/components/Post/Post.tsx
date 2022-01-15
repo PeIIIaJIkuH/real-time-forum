@@ -52,7 +52,7 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 							</IonLabel>
 							<IonLabel>
 								<div className={s.footer}>
-									<div>
+									<div className={s.categories}>
 										{post.categories.map(category => (
 											<div key={category.id} className={s.tag}>
 												{category.name}
