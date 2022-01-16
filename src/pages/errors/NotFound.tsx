@@ -1,6 +1,7 @@
 import {IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react'
 import {FC} from 'react'
 import {Content} from '../../components/Content/Content'
+import s from './errors.module.css'
 
 export const NotFound: FC = () => {
 	return (
@@ -11,8 +12,8 @@ export const NotFound: FC = () => {
 				</IonToolbar>
 			</IonHeader>
 			<Content>
-				<div>
-					Not found
+				<div className={s.wrapper}>
+					We can't seem to find the page you're looking for
 				</div>
 			</Content>
 		</IonPage>

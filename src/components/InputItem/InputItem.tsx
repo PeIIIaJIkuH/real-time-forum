@@ -44,7 +44,7 @@ export const InputItem: FC<Props> = (
 		setIsOpen(false)
 	}
 
-	return <>
+	return (
 		<IonItem className={clsx(touched && error && s.incorrect, !padding && s.noPadding, s.item)} lines={withLine ? 'full' : 'none'}>
 			{label && (
 				<IonLabel position='floating'>
@@ -52,7 +52,7 @@ export const InputItem: FC<Props> = (
 				</IonLabel>
 			)}
 			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}
-			          placeholder={placeholder} inputmode={mode} spellcheck={true} clearOnEdit={true}
+			          placeholder={placeholder} inputmode={mode} spellcheck
 			/>
 			{touched && error && (
 				<>
@@ -67,5 +67,5 @@ export const InputItem: FC<Props> = (
 				</>
 			)}
 		</IonItem>
-	</>
+	)
 }

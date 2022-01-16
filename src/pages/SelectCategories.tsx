@@ -27,7 +27,7 @@ const CategoryItem: FC<CategoryItemProps> = ({name, isSelected, callback}) => {
 	}
 
 	return (
-		<IonItem key={name} onClick={onClick} button={true} lines='full'>
+		<IonItem key={name} onClick={onClick} button lines='full'>
 			<IonText>{name}</IonText>
 			{isSelected && (
 				<IonIcon icon={checkmarkOutline} slot='end' size='small'/>

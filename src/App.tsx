@@ -28,42 +28,46 @@ import authState from './store/authState'
 
 /* Theme variables */
 import './theme/variables.css'
+import {NotFound} from './pages/errors/NotFound'
 
 export const App: FC = observer(() => {
 	useEffect(() => {
 		authState.fetchUserData().then()
 	}, [])
 
-	return <>
-		<SideMenu/>
-		<IonApp>
-			<IonReactRouter>
-				<IonTabs>
-					<IonRouterOutlet id='main'>
-						<Switch>
-							<Route exact path='/posts/:id'><PostPage/></Route>
-							<Route exact path='/posts'><Posts/></Route>
-							<Route exact path='/chats'><ChatsPage/></Route>
-							<Route exact path='/profile'><Profile/></Route>
-							<Redirect exact path='/' to='/posts'/>
-						</Switch>
-					</IonRouterOutlet>
-					<IonTabBar slot='bottom'>
-						<IonTabButton tab='posts' href='/posts'>
-							<IonIcon icon={readerOutline}/>
-							<IonLabel>Posts</IonLabel>
-						</IonTabButton>
-						<IonTabButton tab='chats' href='/chats' disabled={!authState.user}>
-							<IonIcon icon={chatbubbleEllipsesOutline}/>
-							<IonLabel>Chats</IonLabel>
-						</IonTabButton>
-						<IonTabButton tab='profile' href='/profile' disabled={!authState.user}>
-							<IonIcon icon={personOutline}/>
-							<IonLabel>Profile</IonLabel>
-						</IonTabButton>
-					</IonTabBar>
-				</IonTabs>
-			</IonReactRouter>
-		</IonApp>
-	</>
+	return (
+		<>
+			<SideMenu/>
+			<IonApp>
+				<IonReactRouter>
+					<IonTabs>
+						<IonRouterOutlet id='main'>
+							<Switch>
+								<Route exact path='/posts/:id'><PostPage/></Route>
+								<Route exact path='/posts'><Posts/></Route>
+								<Route exact path='/chats'><ChatsPage/></Route>
+								<Route exact path='/profile'><Profile/></Route>
+								<Redirect exact path='/' to='/posts'/>
+								<Route><NotFound/></Route>
+							</Switch>
+						</IonRouterOutlet>
+						<IonTabBar slot='bottom'>
+							<IonTabButton tab='posts' href='/posts'>
+								<IonIcon icon={readerOutline}/>
+								<IonLabel>Posts</IonLabel>
+							</IonTabButton>
+							<IonTabButton tab='chats' href='/chats' disabled={!authState.user}>
+								<IonIcon icon={chatbubbleEllipsesOutline}/>
+								<IonLabel>Chats</IonLabel>
+							</IonTabButton>
+							<IonTabButton tab='profile' href='/profile' disabled={!authState.user}>
+								<IonIcon icon={personOutline}/>
+								<IonLabel>Profile</IonLabel>
+							</IonTabButton>
+						</IonTabBar>
+					</IonTabs>
+				</IonReactRouter>
+			</IonApp>
+		</>
+	)
 })
