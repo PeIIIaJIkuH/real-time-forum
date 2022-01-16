@@ -20,6 +20,7 @@ export const Messages: FC = observer(() => {
 			setTimeout(() => {
 				endRef.current?.scrollIntoView({behavior: 'smooth'})
 			}, 10)
+			setWasOnce(true)
 		}
 	}
 
@@ -28,9 +29,6 @@ export const Messages: FC = observer(() => {
 		observer.current = new IntersectionObserver(async entries => {
 			if (entries[0].isIntersecting && !chatsState.completed) {
 				await chatsState.fetchMessages(scrollToBottom)
-				setTimeout(() => {
-					setWasOnce(true)
-				})
 			}
 		})
 		node && observer.current.observe(node)
@@ -53,9 +51,6 @@ export const Messages: FC = observer(() => {
 	useEffect(() => {
 		chatsState.fetchMessages().then()
 		chatsAPI.readMessages(chatsState.room?.id!).then()
-		setTimeout(() => {
-			endRef.current?.scrollIntoView({behavior: 'smooth'})
-		}, 10)
 		return () => {
 			chatsState.setMessages([])
 			chatsState.setLastMessageId(0)
