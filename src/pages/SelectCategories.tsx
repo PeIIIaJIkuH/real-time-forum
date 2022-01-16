@@ -15,6 +15,27 @@ import {
 import {addOutline, arrowBackOutline, checkmarkOutline} from 'ionicons/icons'
 import {ICategory} from '../types'
 
+interface CategoryItemProps {
+	name: string
+	isSelected: boolean
+	callback: (name: string) => void
+}
+
+const CategoryItem: FC<CategoryItemProps> = ({name, isSelected, callback}) => {
+	const onClick = () => {
+		callback(name)
+	}
+
+	return (
+		<IonItem key={name} onClick={onClick} button={true} lines='full'>
+			<IonText>{name}</IonText>
+			{isSelected && (
+				<IonIcon icon={checkmarkOutline} slot='end' size='small'/>
+			)}
+		</IonItem>
+	)
+}
+
 interface Props {
 	closeModal: (success: boolean) => void
 	categories: ICategory[]
@@ -85,12 +106,10 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 		closeModal(true)
 	}
 
-	const filteredCategories = categories.filter(category => {
-		const trimmed = text.trim()
-		return !trimmed || category.name.includes(trimmed)
-	})
-
-	const filteredNewSelected = Object.keys(newSelected).filter(name => !names.has(name))
+	const trimmed = text.trim()
+	const filteredCategories = categories.filter(({name}) => !trimmed || name.includes(trimmed))
+	const filteredNewSelected = Object.keys(newSelected)
+		.filter(name => (!trimmed || !names.has(name) && name.includes(trimmed)))
 
 	return (
 		<>
@@ -102,8 +121,8 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 						</IonButton>
 					</IonButtons>
 					<IonInput placeholder='Search' value={text} onIonChange={onChange} maxlength={20} onKeyDown={onKeyDown}/>
-					{text.trim() && !categories.some(category => category.name === text.trim()) && !newSelected[text.trim()] && (
-						<IonButton slot='end' fill='clear' color='medium' onClick={addCategory}>
+					{trimmed && !categories.some(category => category.name === trimmed) && !newSelected[trimmed] && (
+						<IonButton slot='end' fill='clear' color='primary' onClick={addCategory}>
 							<IonIcon slot='icon-only' icon={addOutline}/>
 						</IonButton>
 					)}
@@ -112,20 +131,10 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 			<IonContent>
 				<IonList>
 					{filteredNewSelected.map(name => (
-						<IonItem key={name} onClick={() => onClick(name)} button={true} lines='full'>
-							<IonText>{name}</IonText>
-							{newSelected[name] && (
-								<IonIcon icon={checkmarkOutline} slot='end' size='small'/>
-							)}
-						</IonItem>
+						<CategoryItem name={name} isSelected={newSelected[name]} callback={onClick} key={name}/>
 					))}
-					{filteredCategories.map(category => (
-						<IonItem key={category.id} onClick={() => onClick(category.name)} button={true} lines='full'>
-							<IonText>{category.name}</IonText>
-							{newSelected[category.name] && (
-								<IonIcon icon={checkmarkOutline} slot='end' size='small'/>
-							)}
-						</IonItem>
+					{filteredCategories.map(({id, name}) => (
+						<CategoryItem key={id} name={name} isSelected={newSelected[name]} callback={onClick}/>
 					))}
 				</IonList>
 			</IonContent>

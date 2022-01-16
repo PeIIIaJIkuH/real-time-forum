@@ -14,7 +14,7 @@ export const Messages: FC = observer(() => {
 	const [wasOnce, setWasOnce] = useState(false),
 		observer = useRef<IntersectionObserver>(),
 		endRef = useRef<HTMLDivElement>(null)
-	
+
 	const scrollToBottom = () => {
 		if (!wasOnce) {
 			setTimeout(() => {

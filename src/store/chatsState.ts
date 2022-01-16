@@ -52,7 +52,7 @@ class ChatsState {
 	setLoading(loading: boolean) {
 		this.loading = loading
 	}
-	
+
 	setDisabled(disabled: boolean) {
 		this.disabled = disabled
 	}

@@ -3,6 +3,7 @@ import {FC, useEffect} from 'react'
 import chatsState from '../store/chatsState'
 import {TSegment} from '../types'
 import {ChatItem} from './ChatItem/ChatItem'
+import {IonList} from '@ionic/react'
 
 interface Props {
 	segment: TSegment
@@ -21,17 +22,20 @@ export const Chat: FC<Props> = observer(({segment}) => {
 		loadData()
 	}, [segment, chatsState.room])
 
-	return <>
-		{segment === 'chats' ? (
-			chatsState.chatRooms.map(room => (
-				<ChatItem user={room.user} key={room.user.id} lastMessage={room.lastMessage}
-				          unreadMsgNumber={room.unreadMsgNumber}
-				/>
-			))
-		) : (
-			chatsState.chatUsers.map(user => (
-				<ChatItem user={user} key={user.id}/>
-			))
-		)}
-	</>
+	return (
+		<IonList>
+			{segment === 'users' && (
+				chatsState.chatUsers.map(user => (
+					<ChatItem user={user} key={user.id}/>
+				))
+			)}
+			{segment === 'chats' && (
+				chatsState.chatRooms.map(room => (
+					<ChatItem user={room.user} key={room.user.id} lastMessage={room.lastMessage}
+					          unreadMsgNumber={room.unreadMsgNumber}
+					/>
+				))
+			)}
+		</IonList>
+	)
 })

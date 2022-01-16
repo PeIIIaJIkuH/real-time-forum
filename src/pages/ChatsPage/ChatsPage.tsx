@@ -1,5 +1,5 @@
 import {SegmentChangeEventDetail} from '@ionic/core'
-import {IonGrid, IonLabel, IonList, IonModal, IonPage, IonSegment, IonSegmentButton} from '@ionic/react'
+import {IonGrid, IonLabel, IonModal, IonPage, IonSegment, IonSegmentButton} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
 import {useHistory} from 'react-router'
@@ -43,9 +43,7 @@ export const ChatsPage: FC = observer(() => {
 							<IonLabel>Chats</IonLabel>
 						</IonSegmentButton>
 					</IonSegment>
-					<IonList>
-						<Chat segment={segment}/>
-					</IonList>
+					<Chat segment={segment}/>
 					{segment === 'chats' && chatsState.chatRooms.length === 0 && (
 						<div className={s.noItems}>
 							<div>There are no chats</div>
