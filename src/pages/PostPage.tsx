@@ -8,6 +8,8 @@ import {
 	IonListHeader,
 	IonModal,
 	IonPage,
+	IonRefresher,
+	IonRefresherContent,
 } from '@ionic/react'
 import {chatboxOutline} from 'ionicons/icons'
 import {observer} from 'mobx-react-lite'
@@ -34,6 +36,12 @@ export const PostPage: FC = observer(() => {
 		setIsOpen(false)
 	}
 
+	const refreshData = async (e: any) => {
+		await postsState.fetchPost(id)
+		await postsState.fetchComments(id)
+		e.detail.complete()
+	}
+
 	useEffect(() => {
 		postsState.fetchData(id).then()
 	}, [id])
@@ -53,6 +61,9 @@ export const PostPage: FC = observer(() => {
 		<IonPage>
 			<Header title='Post' backButton={<IonBackButton/>}/>
 			<Content>
+				<IonRefresher slot='fixed' onIonRefresh={refreshData}>
+					<IonRefresherContent/>
+				</IonRefresher>
 				<IonFab vertical='bottom' horizontal='end' slot='fixed'>
 					<IonFabButton onClick={openModal} disabled={!authState.user}>
 						<IonIcon icon={chatboxOutline} size='large'/>

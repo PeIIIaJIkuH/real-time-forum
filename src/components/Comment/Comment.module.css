@@ -3,3 +3,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.title h5 {
+    font-weight: 600;
+}

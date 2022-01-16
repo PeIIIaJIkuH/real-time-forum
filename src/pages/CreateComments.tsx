@@ -36,7 +36,8 @@ export const CreateComment: FC<Props> = ({closeModal, postId}) => {
 		const response = await postsAPI.createComment(comment, postId)
 		if (response.state) {
 			appState.setIsLoading(true)
-			await postsState.fetchComments(String(postId))
+			await postsState.fetchPost(postId)
+			await postsState.fetchComments(postId)
 			appState.setIsLoading(false)
 			closeModal()
 			toast({message: response.message, duration: toastDuration, color: 'success'})
