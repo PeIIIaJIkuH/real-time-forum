@@ -7,17 +7,10 @@ import {IonList} from '@ionic/react'
 
 interface Props {
 	segment: TSegment
+	loadData: () => void
 }
 
-export const Chat: FC<Props> = observer(({segment}) => {
-	const loadData = () => {
-		if (segment === 'users') {
-			chatsState.fetchUsers().then()
-		} else {
-			chatsState.fetchChatRooms().then()
-		}
-	}
-
+export const Chat: FC<Props> = observer(({segment, loadData}) => {
 	useEffect(() => {
 		loadData()
 	}, [segment, chatsState.room])

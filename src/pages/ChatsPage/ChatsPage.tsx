@@ -1,5 +1,14 @@
 import {SegmentChangeEventDetail} from '@ionic/core'
-import {IonGrid, IonLabel, IonModal, IonPage, IonSegment, IonSegmentButton} from '@ionic/react'
+import {
+	IonGrid,
+	IonLabel,
+	IonModal,
+	IonPage,
+	IonRefresher,
+	IonRefresherContent,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/react'
 import {observer} from 'mobx-react-lite'
 import {FC, useEffect, useState} from 'react'
 import {useHistory} from 'react-router'
@@ -24,6 +33,19 @@ export const ChatsPage: FC = observer(() => {
 		setSegment(e.detail.value as TSegment)
 	}
 
+	const loadData = async () => {
+		if (segment === 'users') {
+			await chatsState.fetchUsers()
+		} else {
+			await chatsState.fetchChatRooms()
+		}
+	}
+
+	const refreshData = async (e: any) => {
+		await loadData()
+		e.detail.complete()
+	}
+
 	useEffect(() => {
 		return () => {
 			chatsState.setRoom(null)
@@ -34,6 +56,9 @@ export const ChatsPage: FC = observer(() => {
 		<IonPage>
 			<Header title='Chats'/>
 			<Content>
+				<IonRefresher slot='fixed' onIonRefresh={refreshData}>
+					<IonRefresherContent/>
+				</IonRefresher>
 				<IonGrid fixed className='ion-no-padding'>
 					<IonSegment onIonChange={onSegmentChange} value={segment} className={s.segment}>
 						<IonSegmentButton value='users'>
@@ -43,7 +68,7 @@ export const ChatsPage: FC = observer(() => {
 							<IonLabel>Chats</IonLabel>
 						</IonSegmentButton>
 					</IonSegment>
-					<Chat segment={segment}/>
+					<Chat segment={segment} loadData={loadData}/>
 					{segment === 'chats' && chatsState.chatRooms.length === 0 && (
 						<div className={s.noItems}>
 							<div>There are no chats</div>
