@@ -64,13 +64,11 @@ export const Messages: FC = observer(() => {
 			<Content>
 				<IonGrid fixed className={s.messages}>
 					<div ref={endRef}/>
-					{chatsState.messages.map((message, index) => {
-						if (chatsState.messages.length === index + 3) {
-							return <MessageItem message={message} key={message.id} innerRef={detectorRef}/>
-						} else {
-							return <MessageItem message={message} key={message.id}/>
-						}
-					})}
+					{chatsState.messages.map((message, index) => (
+						<MessageItem message={message} key={message.id}
+						             innerRef={chatsState.messages.length === index + 3 ? detectorRef : undefined}
+						/>
+					))}
 				</IonGrid>
 			</Content>
 			<IonFooter>

@@ -50,7 +50,7 @@ export const ChatItem: FC<Props> = observer(({user, lastMessage, unreadMsgNumber
 					</IonText>
 				)}
 				{user.status === 'online' && !lastMessage && (
-					<IonIcon icon={ellipse} slot='end' color='primary'/>
+					<IonIcon icon={ellipse} slot='end' color='primary' className={s.onlineIcon}/>
 				)}
 				<div className={s.info}>
 					{lastMessage?.user.id === authState.user?.id && lastMessage?.read ? (
