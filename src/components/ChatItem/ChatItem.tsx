@@ -27,7 +27,7 @@ export const ChatItem: FC<Props> = observer(({user, lastMessage, unreadMsgNumber
 	}
 
 	return (
-		<IonItem key={user.id} onClick={onClick} disabled={chatsState.disabled}>
+		<IonItem key={user.id} onClick={onClick} disabled={chatsState.disabled} lines='full'>
 			<IonAvatar>
 				<img src='https://ionicframework.com/docs/demos/api/avatar/avatar.svg' alt='avatar'/>
 			</IonAvatar>
