@@ -19,7 +19,7 @@ export const Messages: FC = observer(() => {
 		if (!wasOnce) {
 			setTimeout(() => {
 				endRef.current?.scrollIntoView({behavior: 'smooth'})
-			}, 10)
+			}, 100)
 			setWasOnce(true)
 		}
 	}

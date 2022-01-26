@@ -62,7 +62,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 					chatsState.pushFront([message])
 					setTimeout(() => {
 						endRef?.current?.scrollIntoView({behavior: 'smooth'})
-					}, 10)
+					}, 100)
 					break
 				case 'PingMessage':
 					socket.current?.send(JSON.stringify({
