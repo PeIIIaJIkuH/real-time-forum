@@ -18,7 +18,7 @@ export const Messages: FC = observer(() => {
 	const scrollToBottom = () => {
 		if (!wasOnce) {
 			setTimeout(() => {
-				endRef.current?.scrollIntoView({behavior: 'smooth'})
+				endRef.current?.scrollIntoView()
 			}, 100)
 			setWasOnce(true)
 		}
