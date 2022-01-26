@@ -115,7 +115,7 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 							<TextareaItem touched={touched.content} error={errors.content} value={values.content}
 							              name='content' label='Content' handleChange={handleChange} handleSubmit={handleSubmit}
 							/>
-							<IonItem button onClick={onClick} lines='full'>
+							<IonItem button onClick={onClick}>
 								<IonLabel>Categories</IonLabel>
 								<IonCol className={s.categories}>
 									{filteredSelected.map(name => (
