@@ -80,10 +80,11 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 	useEffect(() => {
 		const f = async () => {
 			const response = await postsAPI.getCategories()
-			setCategories(response.data)
+			const data = response.data || []
+			setCategories(data)
 			const names = new Set<string>()
-			for (let i = 0; i < response.data.length; i++) {
-				names.add(response.data[i].name)
+			for (let i = 0; i < data.length; i++) {
+				names.add(data[i].name)
 			}
 			setNames(names)
 		}
