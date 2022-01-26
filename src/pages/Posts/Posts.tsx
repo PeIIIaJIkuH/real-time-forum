@@ -35,6 +35,7 @@ export const Posts: FC = observer(() => {
 
 	const closeModal = () => {
 		setIsOpen(false)
+		postsState.fetchPosts().then()
 	}
 
 	const onInfinite = async (e: any) => {
