@@ -79,7 +79,7 @@ class ChatsState {
 		}
 	}
 
-	async fetchMessages(callback?: () => void) {
+	async fetchMessages() {
 		if (this.loading) {
 			return
 		}
@@ -93,9 +93,6 @@ class ChatsState {
 			return
 		}
 		this.pushBack(response.data)
-		if (callback) {
-			callback()
-		}
 		this.setLastMessageId(this.messages[this.messages.length - 1].id)
 		this.setCompleted(false)
 	}

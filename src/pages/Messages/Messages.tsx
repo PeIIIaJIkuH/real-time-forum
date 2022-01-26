@@ -28,7 +28,8 @@ export const Messages: FC = observer(() => {
 		observer.current && observer.current.disconnect()
 		observer.current = new IntersectionObserver(async entries => {
 			if (entries[0].isIntersecting && !chatsState.completed) {
-				await chatsState.fetchMessages(scrollToBottom)
+				await chatsState.fetchMessages()
+				scrollToBottom()
 			}
 		})
 		node && observer.current.observe(node)
