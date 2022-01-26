@@ -16,12 +16,10 @@ export const Messages: FC = observer(() => {
 		endRef = useRef<HTMLDivElement>(null)
 
 	const scrollToBottom = () => {
-		if (!wasOnce) {
-			setTimeout(() => {
-				endRef.current?.scrollIntoView()
-			}, 100)
-			setWasOnce(true)
-		}
+		setTimeout(() => {
+			endRef.current?.scrollIntoView()
+		}, 100)
+		setWasOnce(true)
 	}
 
 	const detectorRef = useCallback(node => {
@@ -29,7 +27,9 @@ export const Messages: FC = observer(() => {
 		observer.current = new IntersectionObserver(async entries => {
 			if (entries[0].isIntersecting && !chatsState.completed) {
 				await chatsState.fetchMessages()
-				scrollToBottom()
+				if (!wasOnce) {
+					scrollToBottom()
+				}
 			}
 		})
 		node && observer.current.observe(node)
@@ -65,11 +65,12 @@ export const Messages: FC = observer(() => {
 			<Content>
 				<IonGrid fixed className={s.messages}>
 					<div ref={endRef}/>
-					{chatsState.messages.map((message, index) => (
-						<MessageItem message={message} key={message.id}
-						             innerRef={chatsState.messages.length === index + 3 ? detectorRef : undefined}
-						/>
-					))}
+					{chatsState.messages.map((message, index) => {
+						if (chatsState.messages.length === index + 3) {
+							return <MessageItem message={message} key={message.id} innerRef={detectorRef}/>
+						}
+						return <MessageItem message={message} key={message.id}/>
+					})}
 				</IonGrid>
 			</Content>
 			<IonFooter>
