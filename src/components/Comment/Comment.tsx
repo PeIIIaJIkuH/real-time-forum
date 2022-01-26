@@ -17,7 +17,7 @@ export const Comment: FC<Props> = ({comment}) => {
 						<h5>{comment.author.username}</h5>
 						<h6>{getTime(comment.createdAt)}</h6>
 					</div>
-					<p>{comment.content}</p>
+					<p className='break-word'>{comment.content}</p>
 				</>}
 			</IonLabel>
 		</IonItem>

@@ -33,9 +33,11 @@ export const TextareaItem: FC<Props> = ({
 	}
 
 	return (
-		<IonItem className={clsx(touched && error && s.incorrect, s.item)}>
+		<IonItem className={clsx(touched && error && s.incorrect, s.item)} lines='inset'>
 			<IonLabel position='floating'>{label}</IonLabel>
-			<IonTextarea name={name} value={value} onIonChange={handleChange} autoGrow onKeyDown={onKeyDown}/>
+			<IonTextarea name={name} value={value} onIonChange={handleChange} autoGrow onKeyDown={onKeyDown}
+			             maxlength={500} className='break-word'
+			/>
 			{touched && error && (
 				<>
 					<IonButton slot='end' onClick={onClick} fill='clear'>

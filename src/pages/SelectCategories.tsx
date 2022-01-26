@@ -109,7 +109,7 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 	const trimmed = text.trim()
 	const filteredCategories = categories.filter(({name}) => !trimmed || name.includes(trimmed))
 	const filteredNewSelected = Object.keys(newSelected)
-		.filter(name => (!trimmed || !names.has(name) && name.includes(trimmed)))
+		.filter(name => (!names.has(name) && name.includes(trimmed)))
 
 	return (
 		<>
@@ -120,7 +120,7 @@ export const SelectCategories: FC<Props> = ({closeModal, categories, selected, s
 							<IonIcon icon={arrowBackOutline} slot='icon-only'/>
 						</IonButton>
 					</IonButtons>
-					<IonInput placeholder='Search' value={text} onIonChange={onChange} maxlength={20} onKeyDown={onKeyDown}/>
+					<IonInput placeholder='Search or create categories' value={text} onIonChange={onChange} maxlength={20} onKeyDown={onKeyDown}/>
 					{trimmed && !categories.some(category => category.name === trimmed) && !newSelected[trimmed] && (
 						<IonButton slot='end' fill='clear' color='primary' onClick={addCategory}>
 							<IonIcon slot='icon-only' icon={addOutline}/>

@@ -87,7 +87,7 @@ export const SignUpForm: FC<Props> = ({toggle}) => {
 						<InputItem touched={touched.age} error={errors.age} value={values.age} type='number' name='age'
 						           label='Age' handleChange={handleChange} handleSubmit={handleSubmit} mode='numeric'
 						/>
-						<IonItem className={clsx(touched.gender, s.gender)}>
+						<IonItem className={clsx(touched.gender, s.gender)} lines='inset'>
 							<IonLabel position='floating'>Gender</IonLabel>
 							<IonSelect name='gender' value={values.gender} interface='action-sheet' onIonChange={handleChange}>
 								<IonSelectOption value='male'>Male</IonSelectOption>

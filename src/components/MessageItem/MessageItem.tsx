@@ -14,7 +14,7 @@ export const MessageItem: FC<Props> = ({message, innerRef}) => {
 	return (
 		<IonRow className={s.wrapper} ref={innerRef}>
 			<IonCol className={clsx(s.inner, message.isYourMessage && s.myMessage)} size='auto'>
-				<div>{message.content}</div>
+				<div className='break-word'>{message.content}</div>
 				<div className={s.date}>{getTime(message.messageDate, true)}</div>
 			</IonCol>
 		</IonRow>

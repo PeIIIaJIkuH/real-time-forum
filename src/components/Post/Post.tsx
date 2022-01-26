@@ -38,7 +38,7 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 				<IonCard onClick={onClick}>
 					{post && <>
 						<IonCardHeader>
-							<IonCardTitle>{post?.title}</IonCardTitle>
+							<IonCardTitle className='break-word'>{post?.title}</IonCardTitle>
 							<IonCardSubtitle>
 								<div className={s.subtitle}>
 									<div>{post.author.username}</div>
@@ -48,7 +48,7 @@ export const Post: FC<Props> = observer(({post, href, clickable}) => {
 						</IonCardHeader>
 						<IonCardContent>
 							<IonLabel>
-								<div>{post.content || 'Content'}</div>
+								<div className='break-word'>{post.content || 'Content'}</div>
 							</IonLabel>
 							<IonLabel>
 								<div className={s.footer}>

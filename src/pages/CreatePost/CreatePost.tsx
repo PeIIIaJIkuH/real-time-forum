@@ -111,6 +111,7 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 						<Form onSubmit={handleSubmit}>
 							<InputItem touched={touched.title} error={errors.title} value={values.title} type='text'
 							           name='title' label='Title' handleChange={handleChange} handleSubmit={handleSubmit}
+							           maxLength={50}
 							/>
 							<TextareaItem touched={touched.content} error={errors.content} value={values.content}
 							              name='content' label='Content' handleChange={handleChange} handleSubmit={handleSubmit}

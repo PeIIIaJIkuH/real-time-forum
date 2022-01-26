@@ -18,13 +18,14 @@ interface Props {
 	placeholder?: string
 	mode?: 'text' | 'email' | 'numeric'
 	padding?: boolean
+	maxLength?: number
 }
 
 export const InputItem: FC<Props> = (
 	{
 		touched, error, value, name, label, handleChange,
 		type, handleSubmit, withLine = true, placeholder, mode = 'text',
-		padding = true,
+		padding = true, maxLength,
 	},
 ) => {
 	const [isOpen, setIsOpen] = useState(false),
@@ -45,14 +46,16 @@ export const InputItem: FC<Props> = (
 	}
 
 	return (
-		<IonItem className={clsx(touched && error && s.incorrect, !padding && s.noPadding, s.item)} lines={withLine ? 'full' : 'none'}>
+		<IonItem className={clsx(touched && error && s.incorrect, !padding && s.noPadding, s.item)}
+		         lines={withLine ? 'inset' : 'none'}
+		>
 			{label && (
 				<IonLabel position='floating'>
 					{label}
 				</IonLabel>
 			)}
 			<IonInput ref={ref} type={type} name={name} value={value} onIonChange={handleChange} onKeyDown={onKeyDown}
-			          placeholder={placeholder} inputmode={mode} spellcheck
+			          placeholder={placeholder} inputmode={mode} spellcheck maxlength={maxLength} className='break-word'
 			/>
 			{touched && error && (
 				<>

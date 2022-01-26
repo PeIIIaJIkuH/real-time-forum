@@ -4,13 +4,15 @@ export const registerValidationSchema = yup.object({
 	username: yup
 		.string()
 		.nullable()
-		.min(2, 'Minimum 2 characters')
-		.max(20, 'Maximum 20 characters')
+		.min(4, 'Minimum 4 characters')
+		.max(15, 'Maximum 15 characters')
 		.matches(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/, 'Only alphanumeric characters with [" ", "_", "-"]')
 		.required('Required'),
 	email: yup
 		.string()
 		.nullable()
+		.min(5, 'Minimum 5 characters')
+		.max(15, 'Maximum 15 characters')
 		.email('Invalid email')
 		.required('Required'),
 	password: yup
@@ -27,15 +29,15 @@ export const registerValidationSchema = yup.object({
 	firstName: yup
 		.string()
 		.nullable()
-		.min(2, 'Minimum 2 characters')
-		.max(20, 'Maximum 20 characters')
+		.min(4, 'Minimum 4 characters')
+		.max(15, 'Maximum 15 characters')
 		.matches(/^[A-Za-z]+$/, 'Only alphabetic characters')
 		.required('Required'),
 	lastName: yup
 		.string()
 		.nullable()
-		.min(2, 'Minimum 2 characters')
-		.max(20, 'Maximum 20 characters')
+		.min(4, 'Minimum 4 characters')
+		.max(15, 'Maximum 15 characters')
 		.matches(/^[A-Za-z]+$/, 'Only alphabetic characters')
 		.required('Required'),
 	age: yup
@@ -43,7 +45,7 @@ export const registerValidationSchema = yup.object({
 		.nullable()
 		.positive('Only positive numbers')
 		.integer('Only integers')
-		.min(0, 'Minimum 0')
+		.min(10, 'Minimum 10')
 		.max(100, 'Maximum 100')
 		.required('Required'),
 	gender: yup

@@ -25,6 +25,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 
 	const onSubmit = async (values: FormikValues, {resetForm}: any) => {
 		if (!values.content || !values.content.trim()) {
+			resetForm()
 			return
 		}
 		appState.setIsLoading(true)
@@ -88,7 +89,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 						<InputItem
 							touched={touched.content} error={errors.content} value={values.content} type='text' name='content'
 							handleChange={handleChange} handleSubmit={handleSubmit} withLine={false} placeholder='Message'
-							padding={false}
+							padding={false} maxLength={100}
 						/>
 						<IonButton type='submit' className={s.button} fill='clear' slot='end' shape='round' size='default'>
 							<IonIcon icon={send} slot='icon-only'/>
