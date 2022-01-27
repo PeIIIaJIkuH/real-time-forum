@@ -20,9 +20,10 @@ import {Content} from '../components/Content/Content'
 import {Header} from '../components/Header'
 import {Post} from '../components/Post/Post'
 import authState from '../store/authState'
-import postsState from '../store/postState'
+import postState from '../store/postState'
 import {CreateComment} from './CreateComments'
 import {NotFound} from './errors/NotFound'
+import postsState from '../store/postsState'
 
 export const PostPage: FC = observer(() => {
 	const id = useParams<{ id: string }>().id,
@@ -37,23 +38,26 @@ export const PostPage: FC = observer(() => {
 	}
 
 	const refreshData = async (e: any) => {
-		await postsState.fetchPost(id)
-		await postsState.fetchComments(id)
+		await postState.fetchPost(id)
+		await postState.fetchComments(id)
 		e.detail.complete()
 	}
 
 	useEffect(() => {
-		postsState.fetchData(id).then()
+		postState.fetchData(id).then()
 	}, [id])
 
 	useEffect(() => {
 		return () => {
-			postsState.setPost(null)
-			postsState.setComments([])
+			postState.setPost(null)
+			postState.setComments([])
+			postsState.setLastPostId(0)
+			postsState.setCompleted(false)
+			postsState.setPosts([])
 		}
 	}, [])
 
-	if (postsState.postError) {
+	if (postState.postError) {
 		return <NotFound/>
 	}
 
@@ -70,12 +74,12 @@ export const PostPage: FC = observer(() => {
 					</IonFabButton>
 				</IonFab>
 				<IonGrid fixed>
-					<Post post={postsState.post!}/>
+					<Post post={postState.post!}/>
 					<IonList>
 						<IonListHeader>
-							<h3>{postsState.comments ? 'Comments' : 'No Comments'}</h3>
+							<h3>{postState.comments ? 'Comments' : 'No Comments'}</h3>
 						</IonListHeader>
-						{postsState.comments?.map(comment => (
+						{postState.comments?.map(comment => (
 							<Comment comment={comment} key={comment.id}/>
 						))}
 					</IonList>
