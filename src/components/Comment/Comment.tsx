@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const Comment: FC<Props> = ({comment}) => {
+	console.log(comment.content)
 	return (
 		<IonItem>
 			<IonLabel>
@@ -17,7 +18,11 @@ export const Comment: FC<Props> = ({comment}) => {
 						<h5>{comment.author.username}</h5>
 						<h6>{getTime(comment.createdAt)}</h6>
 					</div>
-					<p className='break-word'>{comment.content}</p>
+					<div className='break-word'>
+						{comment.content.split('\n').map(text => (
+							<p>{text}</p>
+						))}
+					</div>
 				</>}
 			</IonLabel>
 		</IonItem>

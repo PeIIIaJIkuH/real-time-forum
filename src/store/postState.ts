@@ -7,7 +7,6 @@ class PostState {
 	post: IPost | null = null
 	postError: boolean = false
 	comments: IComment[] = []
-	commentsError: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -25,10 +24,6 @@ class PostState {
 		this.comments = comments
 	}
 
-	setCommentsError(error: boolean) {
-		this.commentsError = error
-	}
-
 	async fetchPost(id: string) {
 		appState.setIsLoading(true)
 		const response = await postsAPI.getPostById(id)
@@ -44,9 +39,9 @@ class PostState {
 	async fetchComments(postId: string) {
 		appState.setIsLoading(true)
 		const response = await postsAPI.getPostComments(postId, 0, 10)
+		console.log('comments', response)
 		appState.setIsLoading(false)
 		if (!response.state) {
-			this.setCommentsError(true)
 			return
 		}
 		this.setComments(JSON.parse(JSON.stringify(response.data), function (prop, value) {
@@ -57,7 +52,6 @@ class PostState {
 				return value
 			}
 		}))
-		this.setCommentsError(false)
 	}
 
 	async fetchData(id: string) {
