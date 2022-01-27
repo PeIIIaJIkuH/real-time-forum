@@ -39,7 +39,6 @@ class PostState {
 	async fetchComments(postId: string) {
 		appState.setIsLoading(true)
 		const response = await postsAPI.getPostComments(postId, 0, 10)
-		console.log('comments', response)
 		appState.setIsLoading(false)
 		if (!response.state) {
 			return
