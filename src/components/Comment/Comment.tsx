@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const Comment: FC<Props> = ({comment}) => {
-	console.log(comment.content)
 	return (
 		<IonItem>
 			<IonLabel>
