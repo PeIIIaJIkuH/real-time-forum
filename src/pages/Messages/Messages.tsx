@@ -9,6 +9,7 @@ import {Content} from '../../components/Content/Content'
 import {MessageItem} from '../../components/MessageItem/MessageItem'
 import {chatsAPI} from '../../api/chats'
 import s from './Messages.module.css'
+import {Typing} from '../../components/Typing/Typing'
 
 export const Messages: FC = observer(() => {
 	const [wasOnce, setWasOnce] = useState(false),
@@ -49,6 +50,13 @@ export const Messages: FC = observer(() => {
 		</IonButton>
 	)
 
+	const typing = (
+		<div className={s.typing}>
+			<Typing/>
+			<div className={s.text}>typing</div>
+		</div>
+	)
+
 	useEffect(() => {
 		chatsState.fetchMessages().then()
 		chatsAPI.readMessages(chatsState.room?.id!).then()
@@ -61,7 +69,9 @@ export const Messages: FC = observer(() => {
 
 	return (
 		<IonPage>
-			<Header title={chatsState.room?.user.username!} backButton={backButton}/>
+			<Header title={chatsState.room?.user.username!} backButton={backButton}
+			        subTitle={chatsState.isTyping ? typing : undefined} isChat
+			/>
 			<Content>
 				<IonGrid fixed className={s.messages}>
 					<div ref={endRef}/>

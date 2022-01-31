@@ -12,6 +12,7 @@ class ChatsState {
 	lastMessageId: number = 0
 	loading: boolean = false
 	disabled: boolean = false
+	isTyping: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -55,6 +56,10 @@ class ChatsState {
 
 	setDisabled(disabled: boolean) {
 		this.disabled = disabled
+	}
+	
+	setIsTyping(typing: boolean) {
+		this.isTyping = typing
 	}
 
 	async fetchUsers() {

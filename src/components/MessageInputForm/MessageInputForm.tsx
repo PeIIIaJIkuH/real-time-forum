@@ -10,14 +10,18 @@ import {MessageValues, WsEventType} from '../../types'
 import {InputItem} from '../InputItem/InputItem'
 import s from './MessageInputForm.module.css'
 import {chatsAPI} from '../../api/chats'
+import {InputChangeEventDetail} from '@ionic/core'
+import throttle from 'lodash.throttle'
 
 interface Props {
 	endRef?: RefObject<HTMLDivElement>
 }
 
 export const MessageInputForm: FC<Props> = observer(({endRef}) => {
-	const socket = useRef<WebSocket>(),
-		[id, setId] = useState(0)
+	const socket = useRef<WebSocket>()
+	const [id, setId] = useState(0)
+	const timer = useRef<number | null>(null)
+	const value = useRef('')
 
 	const initialValues: MessageValues = {
 		content: null,
@@ -42,6 +46,21 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 			setId(prev => prev + 1)
 		}, 1000)
 	}
+
+	const sendTyping = () => {
+		if (!value.current) {
+			return
+		}
+		const data = {
+			eventType: 'TypingInReceiver',
+			typingInReceiverID: chatsState.room?.user.id,
+		}
+		socket.current?.send(JSON.stringify(data))
+	}
+
+	const sendTypingInSender = throttle(sendTyping, 2000, {
+		leading: true,
+	})
 
 	useEffect(() => {
 		socket.current = new WebSocket(`ws://localhost:8081/api/v1/message/${chatsState.room?.id}`)
@@ -69,11 +88,23 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 						eventType: 'PongMessage',
 					}))
 					break
+				case 'TypingInSender':
+					if (data.typingInUserID !== chatsState.room?.user.id) {
+						break
+					}
+					chatsState.setIsTyping(true)
+					if (timer.current) {
+						window.clearTimeout(timer.current)
+					}
+					// @ts-ignore
+					timer.current = setTimeout(() => {
+						chatsState.setIsTyping(false)
+					}, 3000)
+					break
 				case 'WsError':
 				case 'WsClosed':
 					reconnect()
 					break
-
 			}
 		}
 		return () => {
@@ -88,8 +119,16 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 					<IonItem className={s.item} lines='none'>
 						<InputItem
 							touched={touched.content} error={errors.content} value={values.content} type='text' name='content'
-							handleChange={handleChange} handleSubmit={handleSubmit} withLine={false} placeholder='Message'
-							padding={false} maxLength={100}
+							handleSubmit={handleSubmit} withLine={false} placeholder='Message' padding={false} maxLength={100}
+							handleChange={(e: CustomEvent<InputChangeEventDetail>) => {
+								handleChange(e)
+								if (e.detail.value != null) {
+									value.current = e.detail.value
+								}
+								if (e.detail.value) {
+									sendTypingInSender()
+								}
+							}}
 						/>
 						<IonButton type='submit' className={s.button} fill='clear' slot='end' shape='round' size='default'>
 							<IonIcon icon={send} slot='icon-only'/>
