@@ -1,0 +1,40 @@
+.wrapper {
+    display: flex;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: var(--ion-color-primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: loadingFade 1s infinite;
+}
+
+.dot + .dot {
+    margin-left: 3px;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingFade {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+    }
+}
