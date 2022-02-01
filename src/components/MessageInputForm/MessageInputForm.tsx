@@ -38,7 +38,6 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 			eventType: 'Message',
 		}))
 		appState.setIsLoading(false)
-		chatsState.setIsTyping(false)
 		resetForm()
 	}
 
