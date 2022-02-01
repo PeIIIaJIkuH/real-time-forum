@@ -54,13 +54,13 @@ export const CreatePost: FC<Props> = ({closeModal}) => {
 			...values,
 			categories: selectedCategories,
 		}
-		const response = await postsAPI.createPost(valuesWithCategories as PostValues)
-		if (response.state) {
-			await postsState.fetchPosts()
+		const {state, message} = await postsAPI.createPost(valuesWithCategories as PostValues)
+		if (state) {
+			await postsState.refreshPosts()
 			closeModal()
-			toast({message: response.message, duration: toastDuration, color: 'success'})
+			toast({message: message, duration: toastDuration, color: 'success'})
 		} else {
-			toast({message: response.message, duration: toastDuration, color: 'danger'})
+			toast({message: message, duration: toastDuration, color: 'danger'})
 		}
 	}
 
