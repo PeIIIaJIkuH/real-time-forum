@@ -37,6 +37,8 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 			content: values.content,
 			eventType: 'Message',
 		}))
+		appState.setIsLoading(false)
+		chatsState.setIsTyping(false)
 		resetForm()
 	}
 
@@ -60,6 +62,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 
 	const sendTypingInSender = throttle(sendTyping, 2000, {
 		leading: true,
+		trailing: false,
 	})
 
 	useEffect(() => {
@@ -77,6 +80,10 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 					}
 					if (!isYourMessage) {
 						chatsAPI.readMessage(chatsState.room?.id!, message.id).then()
+						chatsState.setIsTyping(false)
+						if (timer.current) {
+							window.clearTimeout(timer.current)
+						}
 					}
 					chatsState.pushFront([message])
 					setTimeout(() => {
@@ -110,7 +117,7 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 		return () => {
 			socket.current!.close()
 		}
-	}, [id])
+	}, [id, endRef])
 
 	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -139,3 +146,4 @@ export const MessageInputForm: FC<Props> = observer(({endRef}) => {
 		</Formik>
 	)
 })
+
