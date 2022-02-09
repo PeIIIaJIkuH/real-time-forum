@@ -1,23 +1,35 @@
-# Real Time Forum
+# Real time forum
 
-## Modern Instruments
-- React
-- Ionic
-- Mobx
+* Frontend application for [backend](https://github.com/innovember/real-time-forum/tree/develop)
 
-## Project starting
+## Backend starting
 
-Real Time Forum requires [Node.js](https://nodejs.org/) to run.
+- Go to the link given above, clone the repo and run the backend server.
 
-Install the dependencies and devDependencies and start the server.
+## Frontend starting
+
+- Forum requires [Node.js](https://nodejs.org/) to run.
+- Make sure that you have the latest LTS version of node.
+- Open a terminal instance in the root folder:
 
 ```sh
 npm i
 npm start
 ```
 
-## License
+## Screenshots
 
-MIT
-
-**Free Software, Hell Yeah!**
+- Main page, user is not logged in
+  ![Main page, user is not logged in](src/assets/screenshots/main-page-no-auth.jpg)
+- Main page, user is logged in
+  ![Main page, user is logged in](src/assets/screenshots/main-page-auth.jpg)
+- Post page and comments
+  ![Post page and comments](src/assets/screenshots/create-post-form.jpg)
+- Create post form
+  ![Create post form](src/assets/screenshots/create-post-form.jpg)
+- Select categories form
+  ![Select categories form](src/assets/screenshots/select-categories-form.jpg)
+- Chats
+  ![Chats](src/assets/screenshots/chats.jpg)
+- Real time chat
+  ![Chats](src/assets/screenshots/real-time-chat.jpg)
