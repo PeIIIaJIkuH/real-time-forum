@@ -20,16 +20,16 @@ npm start
 ## Screenshots
 
 - Main page, user is not logged in
-  ![Main page, user is not logged in](src/assets/screenshots/main-page-no-auth.jpg)
+- ![Main page, user is not logged in](src/assets/screenshots/main-page-no-auth.jpg)
 - Main page, user is logged in
-  ![Main page, user is logged in](src/assets/screenshots/main-page-auth.jpg)
+- ![Main page, user is logged in](src/assets/screenshots/main-page-auth.jpg)
 - Post page and comments
-  ![Post page and comments](src/assets/screenshots/create-post-form.jpg)
+- ![Post page and comments](src/assets/screenshots/create-post-form.jpg)
 - Create post form
-  ![Create post form](src/assets/screenshots/create-post-form.jpg)
+- ![Create post form](src/assets/screenshots/create-post-form.jpg)
 - Select categories form
-  ![Select categories form](src/assets/screenshots/select-categories-form.jpg)
+- ![Select categories form](src/assets/screenshots/select-categories-form.jpg)
 - Chats
-  ![Chats](src/assets/screenshots/chats.jpg)
+- ![Chats](src/assets/screenshots/chats.jpg)
 - Real time chat
-  ![Chats](src/assets/screenshots/real-time-chat.jpg)
+- ![Chats](src/assets/screenshots/real-time-chat.jpg)
